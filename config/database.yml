@@ -1,0 +1,18 @@
+common: &common
+  adapter: postgresql
+  encoding: unicode
+  username: bulletshot60
+  password: 
+  host: localhost
+  pool: 5
+
+development:
+  <<: *common
+  database: time_tracker
+  
+test:
+  <<: *common
+  database: time_tracker_test
+
+production:
+  adapter: pg

@@ -1,0 +1,484 @@
+@font-face {
+	font-family: 'unicons';
+	src:url('/assets/unicons.eot');
+	src:url('/assets/unicons.eot?#iefix') format('embedded-opentype'),
+		url('/assets/unicons.svg#unicons') format('svg'),
+		url('/assets/unicons.woff') format('woff'),
+		url('/assets/unicons.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+	font-family: 'unicons';
+	content: attr(data-icon);
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+[class^="unicon-"]:before, [class*=" unicon-"]:before {
+	font-family: 'unicons';
+	font-style: normal;
+	speak: none;
+	font-weight: normal;
+	-webkit-font-smoothing: antialiased;
+}
+.unicon-zoom-out:before {
+	content: "\e000";
+}
+.unicon-zoom-in:before {
+	content: "\e001";
+}
+.unicon-youtube:before {
+	content: "\e002";
+}
+.unicon-yahoo:before {
+	content: "\e003";
+}
+.unicon-world:before {
+	content: "\e004";
+}
+.unicon-volume:before {
+	content: "\e005";
+}
+.unicon-volume-off:before {
+	content: "\e006";
+}
+.unicon-volume-medium:before {
+	content: "\e007";
+}
+.unicon-volume-loud:before {
+	content: "\e008";
+}
+.unicon-vimeo:before {
+	content: "\e009";
+}
+.unicon-video:before {
+	content: "\e00a";
+}
+.unicon-user-male:before {
+	content: "\e00b";
+}
+.unicon-user-female:before {
+	content: "\e00c";
+}
+.unicon-upload2:before {
+	content: "\e00d";
+}
+.unicon-upload:before {
+	content: "\e00e";
+}
+.unicon-update:before {
+	content: "\e00f";
+}
+.unicon-unstar:before {
+	content: "\e010";
+}
+.unicon-unlove:before {
+	content: "\e011";
+}
+.unicon-unlock:before {
+	content: "\e012";
+}
+.unicon-unlike:before {
+	content: "\e013";
+}
+.unicon-twitter:before {
+	content: "\e014";
+}
+.unicon-trash:before {
+	content: "\e015";
+}
+.unicon-timemachine:before {
+	content: "\e016";
+}
+.unicon-texting:before {
+	content: "\e017";
+}
+.unicon-tags:before {
+	content: "\e018";
+}
+.unicon-tag:before {
+	content: "\e019";
+}
+.unicon-stumbleupon:before {
+	content: "\e01a";
+}
+.unicon-stream:before {
+	content: "\e01b";
+}
+.unicon-storage:before {
+	content: "\e01c";
+}
+.unicon-stop2:before {
+	content: "\e01d";
+}
+.unicon-stop:before {
+	content: "\e01e";
+}
+.unicon-star:before {
+	content: "\e01f";
+}
+.unicon-spotify:before {
+	content: "\e020";
+}
+.unicon-small-thumbnails:before {
+	content: "\e021";
+}
+.unicon-skype:before {
+	content: "\e022";
+}
+.unicon-shuffle:before {
+	content: "\e023";
+}
+.unicon-share:before {
+	content: "\e024";
+}
+.unicon-settings:before {
+	content: "\e025";
+}
+.unicon-select-vertical:before {
+	content: "\e026";
+}
+.unicon-select-top:before {
+	content: "\e027";
+}
+.unicon-select-right:before {
+	content: "\e028";
+}
+.unicon-select-left:before {
+	content: "\e029";
+}
+.unicon-select-horizontal:before {
+	content: "\e02a";
+}
+.unicon-select-bottom:before {
+	content: "\e02b";
+}
+.unicon-search:before {
+	content: "\e02c";
+}
+.unicon-rewind-to-the-start:before {
+	content: "\e02d";
+}
+.unicon-rewind-to-the-end:before {
+	content: "\e02e";
+}
+.unicon-rewind-to-prev-breakpoint:before {
+	content: "\e02f";
+}
+.unicon-rewind-to-next-breakpoint:before {
+	content: "\e030";
+}
+.unicon-rewind-forward:before {
+	content: "\e031";
+}
+.unicon-rewind-back:before {
+	content: "\e032";
+}
+.unicon-reply:before {
+	content: "\e033";
+}
+.unicon-repeat2:before {
+	content: "\e034";
+}
+.unicon-repeat:before {
+	content: "\e035";
+}
+.unicon-reload2:before {
+	content: "\e036";
+}
+.unicon-reload:before {
+	content: "\e037";
+}
+.unicon-rec:before {
+	content: "\e038";
+}
+.unicon-plus:before {
+	content: "\e039";
+}
+.unicon-play:before {
+	content: "\e03a";
+}
+.unicon-pinterest:before {
+	content: "\e03b";
+}
+.unicon-pin:before {
+	content: "\e03c";
+}
+.unicon-pie-chart:before {
+	content: "\e03d";
+}
+.unicon-photo:before {
+	content: "\e03e";
+}
+.unicon-phone:before {
+	content: "\e03f";
+}
+.unicon-pen:before {
+	content: "\e040";
+}
+.unicon-pause:before {
+	content: "\e041";
+}
+.unicon-path:before {
+	content: "\e042";
+}
+.unicon-option:before {
+	content: "\e043";
+}
+.unicon-note:before {
+	content: "\e044";
+}
+.unicon-new-window:before {
+	content: "\e045";
+}
+.unicon-new-message:before {
+	content: "\e046";
+}
+.unicon-move:before {
+	content: "\e047";
+}
+.unicon-more:before {
+	content: "\e048";
+}
+.unicon-minus:before {
+	content: "\e049";
+}
+.unicon-minimize:before {
+	content: "\e04a";
+}
+.unicon-mic:before {
+	content: "\e04b";
+}
+.unicon-mic-cross:before {
+	content: "\e04c";
+}
+.unicon-messages:before {
+	content: "\e04d";
+}
+.unicon-message2:before {
+	content: "\e04e";
+}
+.unicon-message:before {
+	content: "\e04f";
+}
+.unicon-melody:before {
+	content: "\e050";
+}
+.unicon-maximize:before {
+	content: "\e051";
+}
+.unicon-map:before {
+	content: "\e052";
+}
+.unicon-mail:before {
+	content: "\e053";
+}
+.unicon-macbook:before {
+	content: "\e054";
+}
+.unicon-love:before {
+	content: "\e055";
+}
+.unicon-loudspeaker:before {
+	content: "\e056";
+}
+.unicon-lock:before {
+	content: "\e057";
+}
+.unicon-location:before {
+	content: "\e058";
+}
+.unicon-list3:before {
+	content: "\e059";
+}
+.unicon-list2:before {
+	content: "\e05a";
+}
+.unicon-list:before {
+	content: "\e05b";
+}
+.unicon-list-with-thumbnails:before {
+	content: "\e05c";
+}
+.unicon-linkedin:before {
+	content: "\e05d";
+}
+.unicon-link:before {
+	content: "\e05e";
+}
+.unicon-like:before {
+	content: "\e05f";
+}
+.unicon-large-thumbnails:before {
+	content: "\e060";
+}
+.unicon-key:before {
+	content: "\e061";
+}
+.unicon-iphone:before {
+	content: "\e062";
+}
+.unicon-ipad:before {
+	content: "\e063";
+}
+.unicon-intstagram:before {
+	content: "\e064";
+}
+.unicon-increase:before {
+	content: "\e065";
+}
+.unicon-imac:before {
+	content: "\e066";
+}
+.unicon-home:before {
+	content: "\e067";
+}
+.unicon-folder:before {
+	content: "\e068";
+}
+.unicon-flag:before {
+	content: "\e069";
+}
+.unicon-filter:before {
+	content: "\e06a";
+}
+.unicon-facebook:before {
+	content: "\e06b";
+}
+.unicon-eye:before {
+	content: "\e06c";
+}
+.unicon-eye-cross:before {
+	content: "\e06d";
+}
+.unicon-external:before {
+	content: "\e06e";
+}
+.unicon-exit:before {
+	content: "\e06f";
+}
+.unicon-evernote:before {
+	content: "\e070";
+}
+.unicon-dribbble:before {
+	content: "\e071";
+}
+.unicon-download2:before {
+	content: "\e072";
+}
+.unicon-download:before {
+	content: "\e073";
+}
+.unicon-documents:before {
+	content: "\e074";
+}
+.unicon-document:before {
+	content: "\e075";
+}
+.unicon-directions:before {
+	content: "\e076";
+}
+.unicon-deviantart:before {
+	content: "\e077";
+}
+.unicon-delete:before {
+	content: "\e078";
+}
+.unicon-decrease:before {
+	content: "\e079";
+}
+.unicon-cross:before {
+	content: "\e07a";
+}
+.unicon-code:before {
+	content: "\e07b";
+}
+.unicon-cloud:before {
+	content: "\e07c";
+}
+.unicon-clock:before {
+	content: "\e07d";
+}
+.unicon-clip:before {
+	content: "\e07e";
+}
+.unicon-checkmark:before {
+	content: "\e07f";
+}
+.unicon-chart:before {
+	content: "\e080";
+}
+.unicon-categories:before {
+	content: "\e081";
+}
+.unicon-case:before {
+	content: "\e082";
+}
+.unicon-cart-full:before {
+	content: "\e083";
+}
+.unicon-cart-empty:before {
+	content: "\e084";
+}
+.unicon-card:before {
+	content: "\e085";
+}
+.unicon-camera:before {
+	content: "\e086";
+}
+.unicon-calendar2:before {
+	content: "\e087";
+}
+.unicon-calendar:before {
+	content: "\e088";
+}
+.unicon-calendar-done:before {
+	content: "\e089";
+}
+.unicon-bucket:before {
+	content: "\e08a";
+}
+.unicon-box2:before {
+	content: "\e08b";
+}
+.unicon-box:before {
+	content: "\e08c";
+}
+.unicon-book:before {
+	content: "\e08d";
+}
+.unicon-bell:before {
+	content: "\e08e";
+}
+.unicon-behance:before {
+	content: "\e08f";
+}
+.unicon-arrow-top2:before {
+	content: "\e090";
+}
+.unicon-arrow-top:before {
+	content: "\e091";
+}
+.unicon-arrow-right2:before {
+	content: "\e092";
+}
+.unicon-arrow-right:before {
+	content: "\e093";
+}
+.unicon-arrow-left2:before {
+	content: "\e094";
+}
+.unicon-arrow-left:before {
+	content: "\e095";
+}
+.unicon-arrow-down2:before {
+	content: "\e096";
+}
+.unicon-arrow-down:before {
+	content: "\e097";
+}

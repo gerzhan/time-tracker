@@ -1,0 +1,21 @@
+.offset-start.col-xs-12.col-sm-12.col-md-offset-4.col-md-4.col-lg-offset-4.col-lg-4.well
+	=render "shared/flash"
+	=form_tag(login_url, method: "post") do 
+		.form-group
+			.input-group
+				.input-group-addon
+					.unicon-user-male
+				%input.form-control{ :type => "text", :name => "username", :placeholder => "Username" }
+		.form-group
+			.input-group
+				.input-group-addon
+					.unicon-lock
+				%input.form-control{ :type => "password", :name => "password", :placeholder => "Password" }
+		.form-group
+			.pull-right
+				%button.btn Login
+			.pull-left
+				%a{ :href => forgot_password_url }
+					%span.fui-question
+					Forgot Passwors
+			.clearfix

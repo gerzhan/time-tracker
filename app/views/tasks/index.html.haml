@@ -1,0 +1,20 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-right
+		%a.btn.btn-primary{ :href => new_task_url }
+			%i.fui-plus
+			Start New Task
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Task Name
+			%th Project
+			%th Type
+			%th Action
+			%th Controls
+		- for task in @tasks
+			%tr
+				%td 
+					%a{ :href => edit_task_url(task.id) } 
+						=task.name
