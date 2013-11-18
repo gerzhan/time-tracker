@@ -19,6 +19,10 @@ TimeTracker::Application.routes.draw do
   get  'schedule_history' => 'schedule#history'
   get  'schedule_team' => 'schedule#team'
 
+  get  'tasks/pause/:id' => 'tasks#pause'
+  get  'tasks/resume/:id' => 'tasks#resume'
+  get  'tasks/stop/:id' => 'tasks#stop'
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 

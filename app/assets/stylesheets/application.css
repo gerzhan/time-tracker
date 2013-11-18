@@ -31,3 +31,7 @@ html, body {
 .offset-start {
 	margin-top: 50px;
 }
+
+.table-striped > tbody > tr > td {
+	vertical-align: middle;
+}

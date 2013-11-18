@@ -9,12 +9,35 @@
 	%table.table.table-striped
 		%thead
 			%th Task Name
-			%th Project
 			%th Type
+			%th Project
 			%th Action
+			%th Status
 			%th Controls
 		- for task in @tasks
 			%tr
 				%td 
-					%a{ :href => edit_task_url(task.id) } 
+					%a{ :href => task_url(task.id) } 
 						=task.name
+				%td= task.task_type.name
+				%td= task.task_project.name
+				%td= task.task_action.name
+				%td
+					- if task.task_status == TaskStatus.STARTED
+						%span.label.label-success Started
+					- elsif task.task_status == TaskStatus.RESUMED
+						%span.label.label-success Resumed
+					- elsif task.task_status == TaskStatus.PAUSED
+						%span.label.label-warning Paused
+				%td
+					- if task.task_status == TaskStatus.STARTED || task.task_status == TaskStatus.RESUMED
+						%a.btn.btn-warning{ :href => "/tasks/pause/#{task.id}" } 
+							%i.fui-pause
+							Pause
+					- elsif task.task_status == TaskStatus.PAUSED
+						%a.btn.btn-success{ :href => "/tasks/resume/#{task.id}" } 
+							%i.fui-play
+							Resume
+					%a.btn.btn-danger{ :href => "/tasks/stop/#{task.id}" } 
+						%i.fui-checkbox-unchecked
+						Stop

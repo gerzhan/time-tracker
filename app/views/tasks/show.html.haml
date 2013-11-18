@@ -1,2 +1,65 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4 Task
+	.pull-right
+		%a.btn.btn-primary{ :href => edit_task_url(@task.id) }
+			%i.fui-new
+			Edit
+		- if @task.task_status == TaskStatus.STARTED || @task.task_status == TaskStatus.RESUMED
+			%a.btn.btn-warning{ :href => "/tasks/pause/#{@task.id}" } 
+				%i.fui-pause
+				Pause
+		- elsif @task.task_status == TaskStatus.PAUSED
+			%a.btn.btn-success{ :href => "/tasks/resume/#{@task.id}" } 
+				%i.fui-play
+				Resume
+		%a.btn.btn-danger{ :href => "/tasks/stop/#{@task.id}" } 
+			%i.fui-checkbox-unchecked
+			Stop
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Name
+		%label= @task.name
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Comment
+		%label= @task.comment
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Type
+		%label= @task.task_type ? @task.task_type.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Customer
+		%label= @task.task_customer ? @task.task_customer.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Project
+		%label= @task.task_project ? @task.task_project.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Action
+		%label= @task.task_action ? @task.task_action.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Detail
+		%label= @task.task_detail ? @task.task_detail.name : ""
+	.offset-start
+	%h4 Time Slots
+	%table.table.table-striped
+		%thead
+			%th Date
+			%th Start
+			%th Stop
+			%th Hours
+		%tbody
+			- for slot in @task.task_slot
+				%tr
+					%td= slot.created_at.strftime("%m/%d/%Y")
+					%td= slot.start_time.strftime("%H:%M")
+					%td= slot.stop_time ? slot.stop_time.strftime("%H:%M") : ""
+					%td= ((slot.stop_time ? (slot.stop_time - slot.start_time) : (Time.now - slot.start_time)) / 3600).round(2)
+			%tr
+				%td
+					%strong Total
+				%td
+				%td
+				%td= @task.task_slot.inject(0) { |i, ts| i += ((ts.stop_time ? (ts.stop_time - ts.start_time) : (Time.now - ts.start_time)) / 3600).round(2) }
+
+
