@@ -1,2 +1,19 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Task Name
+			%th Type
+			%th Project
+			%th Action
+			%th Total Time
+		- for task in @tasks
+			%tr
+				%td 
+					%a{ :href => task_url(task.id) } 
+						=task.name
+				%td= task.task_type.name
+				%td= task.task_project.name
+				%td= task.task_action.name
+				%td= task.task_slot.inject(0) { |i, ts| i += ((ts.stop_time ? (ts.stop_time - ts.start_time) : (Time.now - ts.start_time)) / 3600).round(2) }

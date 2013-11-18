@@ -105,5 +105,6 @@ class TasksController < ApplicationController
   end
 
   def history
+    @tasks = Task.where("user_id = ? and task_status_id = ?", current_user, TaskStatus.COMPLETED)
   end
 end
