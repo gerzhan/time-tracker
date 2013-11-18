@@ -31,14 +31,15 @@ class Ability
 
     user ||= User.new
 
-    cannot :manager, :all
+    cannot :manage, :all
 
     if user.role == Role.ADMIN
         can :manage, :all
-    elsif user.role == Role.MANAGER
-
-    elsif user.role == Role.USER
-
+    elsif user.role == Role.MANAGER || user.role == Role.USER
+        can :manage, Task
+        can :manage, TaskSlot
+        can :manage, TimeRequest
+        can :read, :all
     end
   end
 end

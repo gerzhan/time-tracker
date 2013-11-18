@@ -17,12 +17,12 @@
  */
 
 html, body {
+	background-image: url('/assets/background_@2X.png');
 	height: 100%;
 	width: 100%;
 }
 
 .primary-background {
- 	background-image: url('/assets/background_@2X.png');
  	height: 100%;
  	width: 100%;
  	margin-top: -20px;

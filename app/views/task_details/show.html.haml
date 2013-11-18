@@ -1,2 +1,17 @@
-<h1>TaskDetails#show</h1>
-<p>Find me in app/views/task_details/show.html.erb</p>
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-left
+		%h4 Task Detail
+	.pull-right
+		=form_tag(task_detail_url(@task_detail.id), :method => "delete") do 
+			%a.btn.btn-primary{ :href => edit_task_detail_url(@task_detail.id) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger{ :type => "submit" }
+				%i.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Detail Name
+		%label= @task_detail.name

@@ -38,33 +38,32 @@
 	          						<li><a href="<%= schedule_team_url %>">Team Schedule</a></li>
 	         					</ul>
       						</li>
-      						<% if current_user.role == Role.ADMIN || current_user.role == Role.MANAGER %>
+      						<% if current_user.role == Role.MANAGER || current_user.role == Role.ADMIN %>
+      							<li><a href="#" >Reports</a></li>
+      						<% end %>
+      						<% if can? :manage, Department %>
       							<li class="dropdown">
-      								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Reports <b class="caret"></b></a>
+      								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrative <b class="caret"></b></a>
 		        					<ul class="dropdown-menu">
-		          						
+		          						<li><a href="<%= departments_url %>">Departments</a></li>
+		          						<li><a href="<%= users_url %>">Users</a></li>
+		          						<li class="divider"></li>
+		          						<li><a href="<%= task_actions_url %>">Task Actions</a></li>
+		          						<li><a href="<%= task_customers_url %>">Task Customers</a></li>
+		          						<li><a href="<%= task_details_url %>">Task Details</a></li>
+		          						<li><a href="<%= task_projects_url %>">Task Projects</a></li>
+		          						<li><a href="<%= task_types_url %>">Task Types</a></li>
 		         					</ul>
       							</li>
       						<% end %>
       						
-      						<% if current_user.role == Role.ADMIN %>
-      							<li class="dropdown">
-      								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Administrative <b class="caret"></b></a>
-		        					<ul class="dropdown-menu">
-		          						
-		         					</ul>
-      							</li>
-      						<% end %>
-      						<% if current_user.role == Role.ADMIN %>
-      							<li><a href="<%= users_url %>">Users</a></li>
-      						<% end %>
 						<% end %>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<% if !current_user %>
       						<li><a href="/login">Login</a></li>
       					<% else %>
-      						<li><a href="#">Profile</a></li>
+      						<li><a href="/profile">Profile</a></li>
       						<li><a href="/logout">Logout</a></li>
       					<% end %>
       				</ul>

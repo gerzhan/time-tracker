@@ -1,2 +1,16 @@
-<h1>TaskTypes#index</h1>
-<p>Find me in app/views/task_types/index.html.erb</p>
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-right
+		%a.btn.btn-primary{ :href => new_task_type_url }
+			%i.fui-plus
+			Create New Task Type
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Task Type Name
+		- for type in @task_types
+			%tr
+				%td 
+					%a{ :href => task_type_url(type.id) } 
+						=type.name

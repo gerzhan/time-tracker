@@ -36,10 +36,19 @@ class TasksController < ApplicationController
 
   def show
     @task = Task.find(params[:id])
+
+    if @task.user != current_user
+      not_authorized
+    end
   end
 
   def edit
     @task = Task.find(params[:id])
+
+    if @task.user != current_user
+      not_authorized
+    end
+
     @types = TaskType.order(:name)
     @customers = TaskCustomer.order(:name)
     @projects = TaskProject.order(:name)
@@ -49,6 +58,11 @@ class TasksController < ApplicationController
 
   def update
     t = Task.find(params[:id])
+
+    if @task.user != current_user
+      not_authorized
+    end
+
     t.name = params[:name]
     t.comment = params[:comment]
     t.task_type = (params[:task_type] != "" ? TaskType.find(params[:task_type]) : nil)
@@ -66,6 +80,11 @@ class TasksController < ApplicationController
 
   def pause
     t = Task.find(params[:id])
+
+    if @task.user != current_user
+      not_authorized
+    end
+
     t.task_status = TaskStatus.PAUSED
     t.save!
 
@@ -79,6 +98,11 @@ class TasksController < ApplicationController
 
   def resume
     t = Task.find(params[:id])
+
+    if @task.user != current_user
+      not_authorized
+    end
+
     t.task_status = TaskStatus.RESUMED
     t.save!
 
@@ -93,6 +117,11 @@ class TasksController < ApplicationController
 
   def stop
     t = Task.find(params[:id])
+
+    if @task.user != current_user
+      not_authorized
+    end
+    
     t.task_status = TaskStatus.COMPLETED
     t.save!
 

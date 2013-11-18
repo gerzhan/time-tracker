@@ -9,4 +9,12 @@ class ApplicationController < ActionController::Base
     redirect_to login_path
   end
 
+  def not_authorized
+  	redirect_to root_url, :alert => "You are not authorized to access this page."
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    not_authorized
+  end
+
 end

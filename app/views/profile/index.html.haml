@@ -1,0 +1,36 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	=form_tag(profile_url, method: "post", class: "form-horizontal") do
+		%h4 Update Profile
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Username
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "username", :placeholder => "Username", :value => current_user.username }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Email Address
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "email", :placeholder => "Email", :value => current_user.email }
+		.pull-right
+			%button.btn.btn-primary{ :type => "submit" }
+				%i.icon.unicon-pen
+				Update
+		.clearfix
+	=form_tag(profile_url, method: "put", class: "form-horizontal offset-start") do
+		%h4 Change Password
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Current Password
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "password", :name => "current_password", :placeholder => "Current Password" }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 New Password
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "password", :name => "new_password", :placeholder => "New Password" }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Confirm Password
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "password", :name => "confirm_password", :placeholder => "Confirm Password" }
+		.pull-right
+			%button.btn.btn-primary{ :type => "submit" }
+				%i.icon.unicon-pen
+				Change
+		.clearfix

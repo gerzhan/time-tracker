@@ -1,2 +1,16 @@
-<h1>TaskProjects#index</h1>
-<p>Find me in app/views/task_projects/index.html.erb</p>
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-right
+		%a.btn.btn-primary{ :href => new_task_project_url }
+			%i.fui-plus
+			Create New Task Project
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Task Project Name
+		- for project in @task_projects
+			%tr
+				%td 
+					%a{ :href => task_project_url(project.id) } 
+						=project.name

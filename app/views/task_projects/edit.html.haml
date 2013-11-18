@@ -1,2 +1,13 @@
-<h1>TaskProjects#edit</h1>
-<p>Find me in app/views/task_projects/edit.html.erb</p>
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	=form_tag(task_project_url(@task_project.id), method: "put", class: "form-horizontal") do
+		.pull-left
+			%h6 Edit Task Project
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Name
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "name", :placeholder => "Task Project Name", :value => @task_project.name }

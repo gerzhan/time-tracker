@@ -1,2 +1,13 @@
-<h1>TaskCustomers#new</h1>
-<p>Find me in app/views/task_customers/new.html.erb</p>
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	=form_tag(task_customers_url, method: "post", class: "form-horizontal") do
+		.pull-left
+			%h6 Create Task Customer
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Name
+			.col-xs-9.col-sm-9.col-md-9.col-lg-9
+				%input.form-control{ :type => "text", :name => "name", :placeholder => "Task Customer Name" }
