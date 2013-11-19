@@ -18,6 +18,7 @@ class TaskProjectsController < ApplicationController
 
   def show
     @task_project = TaskProject.find(params[:id])
+    @task_actions = TaskAction.where(task_project: @task_project).order(:name)
   end
 
   def edit

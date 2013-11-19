@@ -7,7 +7,7 @@
 		<%= csrf_meta_tags %>
 	</head>
 	<body>
-		<nav class="navbar navbar-default" role="navigation">
+		<nav class="navbar navbar-default navbar-static-top" role="navigation">
 			<div class="container">
 				<div class="navbar-header">
 				    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -48,11 +48,9 @@
 		          						<li><a href="<%= departments_url %>">Departments</a></li>
 		          						<li><a href="<%= users_url %>">Users</a></li>
 		          						<li class="divider"></li>
-		          						<li><a href="<%= task_actions_url %>">Task Actions</a></li>
-		          						<li><a href="<%= task_customers_url %>">Task Customers</a></li>
-		          						<li><a href="<%= task_details_url %>">Task Details</a></li>
-		          						<li><a href="<%= task_projects_url %>">Task Projects</a></li>
 		          						<li><a href="<%= task_types_url %>">Task Types</a></li>
+		          						<li><a href="<%= task_customers_url %>">Task Customers</a></li>
+		          						<li><a href="<%= task_projects_url %>">Task Projects</a></li>
 		         					</ul>
       							</li>
       						<% end %>

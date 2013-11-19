@@ -15,3 +15,18 @@
 	.form-group
 		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Project Name
 		%label= @task_project.name
+	%h4.offset-start Task Project Actions
+	.pull-right
+		%a.btn.btn-primary{ :href => new_task_project_task_action_url(@task_project) }
+			%i.fui-plus
+			Create New Task Action
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Task Action Name
+		- for action in @task_actions
+			%tr
+				%td 
+					%a{ :href => task_project_task_action_url(@task_project, action.id) } 
+						=action.name

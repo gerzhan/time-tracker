@@ -35,11 +35,14 @@ TimeTracker::Application.routes.draw do
   resources :schedule
   resources :users
   resources :departments
-  resources :task_actions
-  resources :task_customers
-  resources :task_details
-  resources :task_projects
+  
   resources :task_types
+  resources :task_customers
+  resources :task_projects do
+    resources :task_actions do
+      resources :task_details
+    end
+  end
 
   # Example resource route with options:
   #   resources :products do

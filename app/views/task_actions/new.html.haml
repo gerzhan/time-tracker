@@ -1,6 +1,6 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
-	=form_tag(task_actions_url, method: "post", class: "form-horizontal") do
+	=form_tag(task_project_task_actions_url(@task_project), method: "post", class: "form-horizontal") do
 		.pull-left
 			%h6 Create Task Action
 		.pull-right

@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20131116004239) do
 
   create_table "task_actions", force: true do |t|
     t.string   "name"
+    t.integer  "task_project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(version: 20131116004239) do
 
   create_table "task_details", force: true do |t|
     t.string   "name"
+    t.integer  "task_action_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

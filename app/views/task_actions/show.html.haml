@@ -3,8 +3,8 @@
 	.pull-left
 		%h4 Task Action
 	.pull-right
-		=form_tag(task_action_url(@task_action.id), :method => "delete") do 
-			%a.btn.btn-primary{ :href => edit_task_action_url(@task_action.id) }
+		=form_tag(task_project_task_action_url(@task_project, @task_action.id), :method => "delete") do 
+			%a.btn.btn-primary{ :href => edit_task_project_task_action_url(@task_project, @task_action.id) }
 				%i.unicon-new-message
 				Edit
 			%button.btn.btn-danger{ :type => "submit" }
@@ -15,3 +15,18 @@
 	.form-group
 		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Action Name
 		%label= @task_action.name
+	%h4.offset-start Task Action Details
+	.pull-right
+		%a.btn.btn-primary{ :href => new_task_project_task_action_task_detail_url(@task_project, @task_action) }
+			%i.fui-plus
+			Create New Task Detail
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Task Detail Name
+		- for detail in @task_details
+			%tr
+				%td 
+					%a{ :href => task_project_task_action_task_detail_url(@task_project, @task_action, detail.id) } 
+						=detail.name
