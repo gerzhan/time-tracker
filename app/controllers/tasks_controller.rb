@@ -59,7 +59,7 @@ class TasksController < ApplicationController
   def update
     t = Task.find(params[:id])
 
-    if @task.user != current_user
+    if t.user != current_user
       not_authorized
     end
 
@@ -81,7 +81,7 @@ class TasksController < ApplicationController
   def pause
     t = Task.find(params[:id])
 
-    if @task.user != current_user
+    if t.user != current_user
       not_authorized
     end
 
@@ -99,7 +99,7 @@ class TasksController < ApplicationController
   def resume
     t = Task.find(params[:id])
 
-    if @task.user != current_user
+    if t.user != current_user
       not_authorized
     end
 
@@ -118,7 +118,7 @@ class TasksController < ApplicationController
   def stop
     t = Task.find(params[:id])
 
-    if @task.user != current_user
+    if t.user != current_user
       not_authorized
     end
     

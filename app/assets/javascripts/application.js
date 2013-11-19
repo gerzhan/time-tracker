@@ -15,7 +15,7 @@
 //= require jquery.ui.touch-punch.min
 //= require bootstrap.min
 //= require bootstrap-select
-//= require bootstrap-combobox
+//= require select2
 //= require bootstrap-switch
 //= require flatui-checkbox
 //= require flatui-radio
@@ -26,6 +26,8 @@
 String.prototype.repeat = function(num) {
   return new Array(num + 1).join(this);
 };
+
+var ta, td;
 
 (function($) {
 
@@ -40,8 +42,28 @@ String.prototype.repeat = function(num) {
 
   $(function() {
 
-    $('.combobox').combobox();
-    
+    $('#task_type').select2({
+      allowClear: true
+    });
+    $('#task_customer').select2({
+      allowClear: true
+    });
+    $('#task_project').select2({
+      allowClear: true
+    });
+    $('#task_action').select2({
+      allowClear: true,
+      matcher: function(term, text, opt) {
+       return opt.attr("task_project") == $('#task_project').val();
+      }
+    });
+    $('#task_detail').select2({
+      allowClear: true,
+      matcher: function(term, text, opt) {
+       return opt.attr("task_action") == $('#task_action').val();
+      }
+    });
+
     // Tabs
     $(".nav-tabs a").on('click', function (e) {
       e.preventDefault();
