@@ -41,7 +41,21 @@ var ta, td;
   };
 
   $(function() {
-
+    $('#time_request_type').select2({
+      allowClear: true
+    });
+    $('#user').select2({
+      allowClear: true
+    });
+    $('#manager').select2({
+      allowClear: true
+    });
+    $('#department').select2({
+      allowClear: true
+    });
+    $('#role').select2({
+      allowClear: true
+    });
     $('#task_type').select2({
       allowClear: true
     });

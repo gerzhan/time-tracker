@@ -1,2 +1,17 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	=form_tag(department_url(@department.id), method: "put", class: "form-horizontal") do
+		.pull-left
+			%h6 Edit Department
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Name
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "name", :placeholder => "Username", :value => @department.name }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Manager
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "manager", options_for_select(@users.collect { |t| [t.username, t.id] }, @department.manager ? @department.manager.username : ""), :include_blank => true, :style => "width: 100%;"

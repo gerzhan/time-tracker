@@ -11,7 +11,7 @@ class CreateTimeRequestTypes < ActiveRecord::Migration
     t.save!
 
 	t = TimeRequestType.new
-    t.name = "OUT_OF_OFFICE"
+    t.name = "Out of Office"
     t.save!    
   end
 end

@@ -1,2 +1,25 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	=form_tag(user_url(@user.id), method: "put", class: "form-horizontal") do
+		.pull-left
+			%h6 Edit User
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Username
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "username", :placeholder => "Username", :value => @user.username }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Email
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "email", :placeholder => "Email", :value => @user.email }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Department
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "department", options_for_select(@departments.collect { |t| [t.name, t.id] }, @user.department ? @user.department.id : ""), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Role
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "role", options_for_select(@roles.collect { |t| [t.name, t.id] }, @user.role ? @user.role.id : ""), :include_blank => true, :style => "width: 100%;"

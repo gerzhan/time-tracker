@@ -1,0 +1,20 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-left
+		%h4 Department
+	.pull-right
+		=form_tag(department_time_request_approver_url(@department.id, @time_request_approver.id), :method => "delete") do 
+			%a.btn.btn-primary{ :href => edit_department_time_request_approver_url(@department.id, @time_request_approver.id) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger{ :type => "submit" }
+				%i.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Time Request Type
+		%label= @time_request_approver.time_request_type ? @time_request_approver.time_request_type.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 User
+		%label= @time_request_approver.user ? @time_request_approver.user.username : ""

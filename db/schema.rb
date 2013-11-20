@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131116004239) do
+ActiveRecord::Schema.define(version: 20131120190610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,23 @@ ActiveRecord::Schema.define(version: 20131116004239) do
     t.integer  "task_detail_id"
     t.integer  "task_status_id"
     t.string   "comment"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "time_request_approvals", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "time_request_id"
+    t.boolean  "approved"
+    t.boolean  "rejected"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "time_request_approvers", force: true do |t|
+    t.integer  "department_id"
+    t.integer  "time_request_type_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

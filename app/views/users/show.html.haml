@@ -1,2 +1,26 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4 User
+	.pull-right
+		=form_tag(user_url(@user.id), :method => "delete") do 
+			%a.btn.btn-primary{ :href => edit_user_url(@user.id) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger{ :type => "submit" }
+				%i.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Username
+		%label= @user.username
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Email
+		%label= @user.email
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Department
+		%label= @user.department ? @user.department.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Role
+		%label= @user.role ? @user.role.name : ""

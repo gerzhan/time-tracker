@@ -1,2 +1,18 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-right
+		%a.btn.btn-primary{ :href => new_department_url }
+			%i.fui-plus
+			Create New Department
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Department
+			%th Manager
+		- for department in @departments
+			%tr
+				%td 
+					%a{ :href => department_url(department.id) } 
+						=department.name
+				%td= department.manager ? department.manager.email : ""

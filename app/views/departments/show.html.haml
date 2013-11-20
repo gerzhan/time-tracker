@@ -1,2 +1,37 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4 Department
+	.pull-right
+		=form_tag(department_url(@department.id), :method => "delete") do 
+			%a.btn.btn-primary{ :href => edit_department_url(@department.id) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger{ :type => "submit" }
+				%i.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Name
+		%label= @department.name
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Manager
+		%label= @department.manager ? @department.manager.username : ""
+	%h4.offset-start Time Request Approvers
+	.pull-right
+		%a.btn.btn-primary{ :href => new_department_time_request_approver_url(@department.id) }
+			%i.unicon-plus
+			Create New Time Request Approver
+	%table.table.table-striped
+		%thead
+			%th View
+			%th Time Request Type
+			%th Username
+		- for approver in @time_request_approvers
+			%tr
+				%td
+					%a{ :href => department_time_request_approver_url(@department.id, approver.id) } view
+				%td= approver.time_request_type ? approver.time_request_type.name : ""
+				%td= approver.user ? approver.user.username : ""
+		

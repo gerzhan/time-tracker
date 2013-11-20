@@ -34,7 +34,9 @@ TimeTracker::Application.routes.draw do
   resources :tasks
   resources :schedule
   resources :users
-  resources :departments
+  resources :departments do
+    resources :time_request_approvers
+  end
   
   resources :task_types
   resources :task_customers
@@ -43,6 +45,8 @@ TimeTracker::Application.routes.draw do
       resources :task_details
     end
   end
+
+  resources :time_request_types
 
   # Example resource route with options:
   #   resources :products do

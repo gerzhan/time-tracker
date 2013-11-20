@@ -1,0 +1,18 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	=form_tag(department_time_request_approver_url(@department.id, @time_request_approver.id), method: "put", class: "form-horizontal") do
+		.pull-left
+			%h6 Edit Time Request Approver
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Time Request Type
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "time_request_type", options_for_select(@time_request_types.collect { |t| [t.name, t.id] }, @time_request_approver.time_request_type ? @time_request_approver.time_request_type.id : ""), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 User
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "user", options_for_select(@users.collect { |t| [t.username, t.id] }, @time_request_approver.user ? @time_request_approver.user.id : ""), :include_blank => true, :style => "width: 100%;"
+		

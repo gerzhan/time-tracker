@@ -1,0 +1,16 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-right
+		%a.btn.btn-primary{ :href => new_time_request_type_url }
+			%i.fui-plus
+			Create New Time Request Type
+	.clearfix
+	.offset-start
+	%table.table.table-striped
+		%thead
+			%th Time Request Type Name
+		- for type in @time_request_types
+			%tr
+				%td 
+					%a{ :href => time_request_type_url(type.id) } 
+						=type.name
