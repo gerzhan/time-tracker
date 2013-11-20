@@ -1,2 +1,29 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	=form_tag(schedule_url(@time_request.id), method: "put", class: "form-horizontal") do
+		.pull-left
+			%h6 Create Schedule Request
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Schedule Request Name
+			.col-xs-9.col-sm-9.col-md-9.col-lg-9
+				%input.form-control{ :type => "text", :name => "name", :placeholder => "Schedule Request Name", :value => @time_request.name }
+		.form-group
+			%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Comment
+			.col-xs-9.col-sm-9.col-md-9.col-lg-9
+				%input.form-control{ :type => "text", :name => "comment", :placeholder => "Schedule Request Comment", :value => @time_request.comment }
+		.form-group
+			%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Time Request Type
+			.col-xs-9.col-sm-9.col-md-9.col-lg-9
+				=select_tag "time_request_type", options_for_select(@time_request_types.collect { |t| [t.name, t.id] }, @time_request.time_request_type ? @time_request.time_request_type.id : ""), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 From
+			.col-xs-9.col-sm-9.col-md-9.col-lg-9
+				%input.form-control{ :type => "text", :name => "from", :placeholder => "mm/dd/yyyy hh:mm", :value => @time_request.from.strftime("%m/%d/%Y %H:%M") }
+		.form-group
+			%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 To
+			.col-xs-9.col-sm-9.col-md-9.col-lg-9
+				%input.form-control{ :type => "text", :name => "to", :placeholder => "mm/dd/yyyy hh:mm", :value => @time_request.to.strftime("%m/%d/%Y %H:%M") }

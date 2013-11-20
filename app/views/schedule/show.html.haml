@@ -1,2 +1,27 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-right
+		=form_tag(schedule_url(@time_request.id), :method => "delete") do
+			%a.btn.btn-primary{ :href => edit_schedule_url(@time_request.id) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger{ :type => "submit" }
+				%i.icon.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Schedule Request Name
+		%label= @time_request.name
+	.form-group
+		%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Comment
+		%label= @time_request.comment
+	.form-group
+		%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 Time Request Type
+		%label= @time_request.time_request_type ? @time_request.time_request_type.name : ""
+	.form-group
+		%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 From
+		%label= @time_request.from.strftime("%m/%d/%Y %H:%M")
+	.form-group
+		%label.col-xs-3.col-sm-3.col-md-3.col-lg-3 To
+		%label= @time_request.to.strftime("%m/%d/%Y %H:%M")
