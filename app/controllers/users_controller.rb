@@ -15,6 +15,7 @@ class UsersController < ApplicationController
     u.email = params[:email]
     u.department = params[:department] != "" ? Department.find(params[:department]) : nil
     u.role = params[:role] != "" ? Role.find(params[:role]) : nil
+    u.yearly_pto_hour_allotment = params[:yearly_pto_hour_allotment]
     u.password = "changeme"
     u.save!
 
@@ -38,6 +39,7 @@ class UsersController < ApplicationController
     u.email = params[:email]
     u.department = params[:department] != "" ? Department.find(params[:department]) : nil
     u.role = params[:role] != "" ? Role.find(params[:role]) : nil
+    u.yearly_pto_hour_allotment = params[:yearly_pto_hour_allotment]
     u.save!
 
     flash[:success] = "User Updated"

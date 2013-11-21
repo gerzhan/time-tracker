@@ -19,6 +19,9 @@
 		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Email
 		%label= @user.email
 	.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Yearly PTO Hour Allotment
+			%label= @user.yearly_pto_hour_allotment
+	.form-group
 		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Department
 		%label= @user.department ? @user.department.name : ""
 	.form-group
