@@ -19,6 +19,8 @@ class UsersController < ApplicationController
     u.password = "changeme"
     u.save!
 
+    UserMailer.welcome_email(u).deliver
+
     flash[:success] = "User Created"
     redirect_to users_url
   end

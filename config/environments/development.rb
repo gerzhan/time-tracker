@@ -28,13 +28,6 @@ TimeTracker::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => "127.0.0.1:3000" }
-  config.action_mailer.smtp_settings = {
-    :address   => "smtp.mandrillapp.com",
-    :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
-    :enable_starttls_auto => true, # detects and uses STARTTLS
-    :user_name => "bulletshot60@gmail.com",
-    :password  => "h2j92Ro_lEw7AqlcByR9Fw", # SMTP password is any valid API key
-    :authentication => 'login', # Mandrill supports 'plain' or 'login'
-    :domain => 'timetracker.io', # your domain to identify your server when connecting
-  }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :address => "localhost", :port => 1025 }
 end

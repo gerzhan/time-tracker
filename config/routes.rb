@@ -23,6 +23,10 @@ TimeTracker::Application.routes.draw do
   get  'tasks/resume/:id' => 'tasks#resume'
   get  'tasks/stop/:id' => 'tasks#stop'
 
+  get  'approve/:id' => 'schedule#approve'
+  get  'reject/:id' => 'schedule#reject'
+  post 'reject/:id' => 'schedule#confirm_reject'
+
   get  'profile' => 'profile#index'
   put  'profile' => 'profile#update_password'
   post 'profile' => 'profile#update_profile'

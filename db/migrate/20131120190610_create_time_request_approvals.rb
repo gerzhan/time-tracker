@@ -5,6 +5,7 @@ class CreateTimeRequestApprovals < ActiveRecord::Migration
 	  t.integer :time_request_id
       t.boolean :approved
       t.boolean :rejected
+      t.string :reject_reason
 
       t.timestamps
     end

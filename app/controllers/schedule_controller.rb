@@ -94,18 +94,23 @@ class ScheduleController < ApplicationController
   def destroy
     t = TimeRequest.find(params[:id])
 
-    if t.user != current_user
-      not_authorized
+    if Date.now < t.from
+      if t.user != current_user
+        not_authorized
+      end
+
+      t.time_request_approval.each do |r|
+        r.delete
+      end
+
+      t.delete
+
+      flash[:success] = "Schedule Request Deleted"
+      redirect_to schedule_index_url
+    else 
+      flash[:success] = "This Time Request has already past and cannot be deleted."
+      redirect_to schedule_url(t.id)
     end
-
-    t.time_request_approval.each do |r|
-      r.delete
-    end
-
-    t.delete
-
-    flash[:success] = "Schedule Request Deleted"
-    redirect_to schedule_index_url
   end
 
   def history
@@ -114,6 +119,18 @@ class ScheduleController < ApplicationController
 
   def team
     
+  end
+
+  def approve
+
+  end
+
+  def reject
+
+  end
+
+  def confirm_reject
+
   end
 
 end
