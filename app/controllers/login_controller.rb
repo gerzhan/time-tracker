@@ -9,10 +9,10 @@ class LoginController < ApplicationController
 		@user = login(params[:username], params[:password])
 		if @user
 			flash[:success] = "Login Successful"
-			redirect_to root_url
+			redirect_back_or_to root_url
 		else
 			flash[:error] = "Username/Password Incorrect"
-			redirect_to login_url
+			redirect_back_or_to login_url
 		end
 	end
 

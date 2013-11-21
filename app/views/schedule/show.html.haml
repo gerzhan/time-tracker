@@ -1,13 +1,14 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
 	.pull-right
-		=form_tag(schedule_url(@time_request.id), :method => "delete") do
-			%a.btn.btn-primary{ :href => edit_schedule_url(@time_request.id) }
-				%i.unicon-new-message
-				Edit
-			%button.btn.btn-danger{ :type => "submit" }
-				%i.icon.unicon-trash
-				Delete
+		-if DateTime.now < @time_request.from
+			=form_tag(schedule_url(@time_request.id), :method => "delete") do
+				%a.btn.btn-primary{ :href => edit_schedule_url(@time_request.id) }
+					%i.unicon-new-message
+					Edit
+				%button.btn.btn-danger{ :type => "submit" }
+					%i.icon.unicon-trash
+					Delete
 	.clearfix
 	.offset-start
 	.form-group

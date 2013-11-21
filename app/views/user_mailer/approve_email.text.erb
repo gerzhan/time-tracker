@@ -1,0 +1,21 @@
+Schedule Request
+
+================
+
+Hello, <%= @approving_user.username %></h3>
+
+<%= @requesting_user.username %> has submitted a schedule request that requires your approval.
+
+Details:
+
+Name: <%= @time_request.name %>
+Comment: <%= @time_request.comment %>
+From: <%= @time_request.from.strftime("%m/%d/%Y %H:%M") %>
+To: <%= @time_request.to.strftime("%m/%d/%Y %H:%M") %>
+
+To approve or deny the request, please click the links below.
+
+Approve: <%= @approve_link %>
+Reject: <%= @reject_link %>
+
+The attached calendar item has been automatically generated for this request.

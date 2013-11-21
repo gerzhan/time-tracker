@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 20131120190610) do
     t.integer  "time_request_id"
     t.boolean  "approved"
     t.boolean  "rejected"
+    t.string   "reject_reason"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

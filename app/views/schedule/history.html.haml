@@ -1,2 +1,24 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	%table.table.table-striped
+		%thead
+			%th Request Name
+			%th Type
+			%th From
+			%th To
+			%th Status
+		- for request in @requests
+			%tr
+				%td 
+					%a{ :href => schedule_url(request.id) } 
+						=request.name
+				%td= request.time_request_type ? request.time_request_type.name : ""
+				%td= request.from.strftime("%m/%d/%Y %H:%M")
+				%td= request.to.strftime("%m/%d/%Y %H:%M")
+				%td
+					- if !request.time_request_approval.collect { |x| x.approved }.include?(false)
+						%span.label.label-success Approved
+					- elsif request.time_request_approval.collect { |x| x.rejected }.include?(true)
+						%span.label.label-danger Rejected
+					- else 
+						%span.label.label-warning Awaiting Approval

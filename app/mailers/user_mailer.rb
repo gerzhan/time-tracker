@@ -13,25 +13,42 @@ class UserMailer < ActionMailer::Base
     mail(:to => user.email, :subject => "Password Reset Request")
   end
 
-  def approve_email(requesting_user, approving_user, time_request)
+  def approve_email(requesting_user, approving_user, time_request, time_request_approval)
+    @requesting_user = requesting_user
+    @approving_user = approving_user
+    @time_request = time_request
+    @approve_link = root_url + "/approve/" + time_request_approval.id.to_s
+    @reject_link = root_url + "/reject/" + time_request_approval.id.to_s
+    mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request")
+  end
 
-    mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Time Request")
+  def reapprove_email(requesting_user, approving_user, time_request, time_request_approval)
+    @requesting_user = requesting_user
+    @approving_user = approving_user
+    @time_request = time_request
+    @approve_link = root_url + "/approve/" + time_request_approval.id.to_s
+    @reject_link = root_url + "/reject/" + time_request_approval.id.to_s
+    mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request Update")
   end
 
   def retracted_email(retracting_user, approving_user, time_request)
     @retracting_user = retracting_user
     @approving_user = approving_user
     @time_request = time_request
-    mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Time Request Retracted")
+    mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request Retracted")
   end
 
   def approved_email(user, time_request)
-
+    @user = user
+    @time_request = time_request
     mail(:to => user.email, :subject => "#{time_request.name} Approved")
   end
 
   def rejected_email(user, rejecting_user, time_request, reason)
-
+    @user = user
+    @rejecting_user = rejecting_user
+    @time_request = time_request
+    @reason = reason
     mail(:to => user.email, :subject => "#{time_request.name} Rejected by #{rejecting_user.username}")
   end
 end
