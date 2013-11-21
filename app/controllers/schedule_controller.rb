@@ -3,7 +3,7 @@ require 'date'
 class ScheduleController < ApplicationController
   
   def index
-    @requests = TimeRequest.where(user: current_user).order(:from)
+    @requests = TimeRequest.where("user_id = ? and to >= ?", current_user.id, Date.now).order(:from)
   end
 
   def new
@@ -43,15 +43,28 @@ class ScheduleController < ApplicationController
 
   def show
     @time_request = TimeRequest.find(params[:id])
+
+    if @time_request.user != current_user
+      not_authorized
+    end
   end
 
   def edit
     @time_request = TimeRequest.find(params[:id])
     @time_request_types = TimeRequestType.order(:name)
+
+    if @time_request.user != current_user
+      not_authorized
+    end
   end
 
   def update
     t = TimeRequest.find(params[:id])
+
+    if t.user != current_user
+      not_authorized
+    end
+
     t.user = current_user
     t.name = params[:name]
     t.comment = params[:comment]
@@ -81,6 +94,10 @@ class ScheduleController < ApplicationController
   def destroy
     t = TimeRequest.find(params[:id])
 
+    if t.user != current_user
+      not_authorized
+    end
+
     t.time_request_approval.each do |r|
       r.delete
     end
@@ -92,9 +109,11 @@ class ScheduleController < ApplicationController
   end
 
   def history
+    @requests = TimeRequest.where("user_id = ? and to < ?", current_user.id, Date.now).order(:from)
   end
 
   def team
+    
   end
 
 end
