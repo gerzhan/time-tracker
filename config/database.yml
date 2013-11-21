@@ -15,4 +15,5 @@ test:
   database: time_tracker_test
 
 production:
-  adapter: pg
+  <<: *common
+  database: time_tracker
