@@ -41,3 +41,4 @@
 					%a.btn.btn-danger{ :href => "/tasks/stop/#{task.id}" } 
 						%i.unicon-stop
 						Complete
+	= will_paginate @tasks, renderer: BootstrapPagination::Rails

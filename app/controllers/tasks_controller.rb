@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   
   def index
-      @tasks = Task.where("user_id = ? and task_status_id in (?)", current_user, [TaskStatus.STARTED, TaskStatus.RESUMED, TaskStatus.PAUSED])
+      @tasks = Task.where("user_id = ? and task_status_id in (?)", current_user, [TaskStatus.STARTED, TaskStatus.RESUMED, TaskStatus.PAUSED]).page(params[:page])
   end
 
   def new
@@ -136,6 +136,6 @@ class TasksController < ApplicationController
   end
 
   def history
-    @tasks = Task.where("user_id = ? and task_status_id = ?", current_user, TaskStatus.COMPLETED)
+    @tasks = Task.where("user_id = ? and task_status_id = ?", current_user, TaskStatus.COMPLETED).page(params[:page])
   end
 end

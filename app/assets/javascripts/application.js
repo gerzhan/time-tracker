@@ -84,6 +84,9 @@ var ta, td;
       $(this).tab("show");
     })
 
+    $(".popover-l").popover({ html: true });
+    $(".popover").css("width", "600px");
+
     // Tooltips
     $("[data-toggle=tooltip]").tooltip("show");
 

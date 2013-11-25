@@ -22,3 +22,4 @@
 						%span.label.label-danger Rejected
 					- else 
 						%span.label.label-warning Awaiting Approval
+	= will_paginate @requests, renderer: BootstrapPagination::Rails
