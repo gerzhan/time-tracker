@@ -10,7 +10,8 @@ class ApplicationController < ActionController::Base
   end
 
   def not_authorized
-  	redirect_to root_url, :alert => "You are not authorized to access this page."
+    flash[:error] = "You are not authorized to access this page."
+  	redirect_to root_url
   end
 
   rescue_from CanCan::AccessDenied do |exception|

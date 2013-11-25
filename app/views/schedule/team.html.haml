@@ -4,7 +4,13 @@
 		%h4
 			Team Schedule
 	.pull-right
-		%input.datepicker{ :type => "text", :id => "schedule_selected_date", :placeholder => "View Week" }
+		%form.form-inline
+			.form-group
+				Week
+			.form-group
+				.input-group
+					%label.sr-only Week
+					%input.form-control.datepicker{ :type => "text", :id => "schedule_selected_date", :placeholder => "View Week", :value => params[:week] }
 	.clearfix
 	.offset
 	%table.table.table-striped

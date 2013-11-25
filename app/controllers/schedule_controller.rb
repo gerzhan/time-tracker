@@ -107,6 +107,8 @@ class ScheduleController < ApplicationController
 
   def update
     t = TimeRequest.find(params[:id])
+    cur_from = t.from
+    cur_to = t.to
 
     if t.user != current_user
       not_authorized
@@ -163,11 +165,13 @@ class ScheduleController < ApplicationController
       if remaining_pto - diff >= 0
         t.save!
 
-        t.time_request_approval.each do |r|
-          r.approved = false
-          r.rejected = false
-          r.save!
-          UserMailer.reapprove_email(current_user, r.user, t, r).deliver
+        if t.from != cur_from || t.to != cur_to
+          t.time_request_approval.each do |r|
+            r.approved = false
+            r.rejected = false
+            r.save!
+            UserMailer.reapprove_email(current_user, r.user, t, r).deliver
+          end
         end
 
         flash[:success] = "Schedule Request Updated"
@@ -240,7 +244,6 @@ class ScheduleController < ApplicationController
       }
       @time[user.username] = schedule
     }
-    print "#{@time}\n"
   end
 
   def approve

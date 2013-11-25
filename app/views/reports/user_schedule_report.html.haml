@@ -1,2 +1,79 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4
+			User Schedule
+	.pull-right
+		%form.form-inline
+			.form-group
+				User
+			.form-group
+				%label.sr-only User
+				=select_tag "schedule_selected_user", options_for_select(@users.collect { |t| [t.username, t.id] }, @selected_user ? @selected_user.id : ""), :include_blank => true
+			.form-group
+				Week
+			.form-group
+				%label.sr-only Week
+				%input.form-control.datepicker{ :type => "text", :id => "schedule_selected_date", :placeholder => "View Week", :value => params[:week] }
+	.clearfix
+	.offset
+	-if @selected_user
+		%table.table.table-striped
+			%thead
+				%th
+					User
+				%th
+					Monday
+					%br	
+					= (@base_date + 1.days).strftime("%m-%d")
+				%th
+					Tuesday
+					%br
+					= (@base_date + 2.days).strftime("%m-%d")
+				%th
+					Wednesday
+					%br
+					= (@base_date + 3.days).strftime("%m-%d")
+				%th
+					Thursday
+					%br
+					= (@base_date + 4.days).strftime("%m-%d")
+				%th
+					Friday
+					%br
+					= (@base_date + 5.days).strftime("%m-%d")
+			%tbody
+				- for user in @users
+					%tr
+						%td
+							=user.username
+						%td
+							- if @time[user.username][1] != ""
+								%a.btn.btn-danger.popover-l{ :href => "#", "data-toggle" => "popover", "data-placement" => "left", :title => "", "data-content" => @time[user.username][1], :role => "button", "data-original-title" => "Schedule Requests" }
+									!
+							- else
+								%span
+						%td
+							- if @time[user.username][2] != ""
+								%a.btn.btn-danger.popover-l{ :href => "#", "data-toggle" => "popover", "data-placement" => "left", :title => "", "data-content" => @time[user.username][2], :role => "button", "data-original-title" => "Schedule Requests" }
+									!
+							- else
+								%span
+						%td
+							- if @time[user.username][3] != ""
+								%a.btn.btn-danger.popover-l{ :href => "#", "data-toggle" => "popover", "data-placement" => "left", :title => "", "data-content" => @time[user.username][3], :role => "button", "data-original-title" => "Schedule Requests" }
+									!
+							- else
+								%span
+						%td
+							- if @time[user.username][4] != ""
+								%a.btn.btn-danger.popover-l{ :href => "#", "data-toggle" => "popover", "data-placement" => "left", :title => "", "data-content" => @time[user.username][4], :role => "button", "data-original-title" => "Schedule Requests" }
+									!
+							- else
+								%span
+						%td
+							- if @time[user.username][5] != ""
+								%a.btn.btn-danger.popover-l{ :href => "#", "data-toggle" => "popover", "data-placement" => "left", :title => "", "data-content" => @time[user.username][5], :role => "button", "data-original-title" => "Schedule Requests" }
+									!
+							- else
+								%span
