@@ -136,15 +136,17 @@ class TasksController < ApplicationController
   end
 
   def history
-    if params[:start] && params[:end] && params[:start] != "" && params[:end] != ""
-      @tasks = Task.where("user_id = ? and task_status_id = ? and created_at >= ? and updated_at <= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:start], "%m/%d/%Y"), Date.strptime(params[:end], "%m/%d/%Y"))
-    elsif params[:start] && params[:start] != ""
-      @tasks = Task.where("user_id = ? and task_status_id = ? and created_at >= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:start], "%m/%d/%Y"))
-    elsif params[:end] && params[:end] != ""
-      @tasks = Task.where("user_id = ? and task_status_id = ? and updated_at <= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:end], "%m/%d/%Y"))
-    else
-      @tasks = Task.where("user_id = ? and task_status_id = ?", current_user, TaskStatus.COMPLETED)
+    @start = Date.today - Date.today.wday
+    @end = @start + 7.days
+
+    if !params[:start] || params[:start] == ""
+      params[:start] = @start.strftime("%m/%d/%Y")
     end
+    if !params[:end] || params[:end] == ""
+      params[:end] = @end.strftime("%m/%d/%Y")
+    end
+
+    @tasks = Task.where("user_id = ? and task_status_id = ? and created_at >= ? and updated_at <= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:start], "%m/%d/%Y"), Date.strptime(params[:end], "%m/%d/%Y"))
 
     @data = {}
     @tasks.each { |task|

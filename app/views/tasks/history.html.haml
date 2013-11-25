@@ -7,11 +7,11 @@
 			.form-group
 				Start Date
 			.form-group
-				%input.form-control.datepicker{ :type => "text", :id => "completed_tasks_start", :placeholder => "Start Date", :value => params[:start] }
+				%input.form-control.datepicker{ :type => "text", :id => "completed_tasks_start", :placeholder => "Start Date", :value => params[:start] || @start.strftime("%m/%d/%Y") }
 			.form-group
 				End Date
 			.form-group
-				%input.form-control.datepicker{ :type => "text", :id => "completed_tasks_end", :placeholder => "End Date", :value => params[:end] }
+				%input.form-control.datepicker{ :type => "text", :id => "completed_tasks_end", :placeholder => "End Date", :value => params[:end] || @end.strftime("%m/%d/%Y") }
 	.clearfix
 	.offset-start
 	:javascript
