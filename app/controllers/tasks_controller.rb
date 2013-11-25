@@ -126,7 +126,9 @@ class TasksController < ApplicationController
     t.save!
 
     ts = t.task_slot.last
-    ts.stop_time = Time.now
+    if ts.stop_time == nil
+      ts.stop_time = Time.now
+    end
     ts.save!
 
     flash[:notice] = "Task Completed"
