@@ -2,7 +2,33 @@ require 'date'
 
 class ScheduleController < ApplicationController
 
+  def remaining_pto
+    t = Date.today
+    t = t - (t.month - 1).months
+    t = t - (t.day - 1).days
+    requests = TimeRequest.where("user_id = ? and \"to\" >= ? and time_request_type_id = ?", current_user.id, DateTime.now, TimeRequestType.find_by_name("PTO"))
+
+    used_pto = 0
+    requests.each { |request|
+      if request.from.to_date == request.to.to_date
+        if request.to - request.from > 8.hours
+          used_pto += 8
+        else
+          used_pto += (request.to - request.from).hours
+        end
+      else
+        (request.from.to_date..request.to.to_date).each { |d|
+          if d.wday != 0 && d.wday != 6
+            used_pto += 8
+          end
+        }
+      end
+    }
+    current_user.yearly_pto_hour_allotment - used_pto
+  end
+
   def index
+    @remaining = remaining_pto
     @requests = TimeRequest.where("user_id = ? and \"to\" >= ?", current_user.id, DateTime.now).order(:from).page(params[:page])
   end
 
@@ -26,20 +52,40 @@ class ScheduleController < ApplicationController
     rescue
       t.to = Date.strptime(params[:to], "%m/%d/%Y")
     end
-    t.save!
 
-    TimeRequestApprover.where(department: current_user.department, time_request_type: t.time_request_type).each do |approver|
-      r = TimeRequestApproval.new
-      r.time_request = t;
-      r.user = approver.user
-      r.approved = false
-      r.rejected = false
-      r.save!
-      UserMailer.approve_email(current_user, approver.user, t, r).deliver
+    used_pto = 0
+    if t.from.to_date == t.to.to_date
+      if t.to - t.from > 8.hours
+        used_pto += 8
+      else
+        used_pto += (t.to - t.from).hours
+      end
+    else
+      (t.from.to_date..t.to.to_date).each { |d|
+        if d.wday != 0 && d.wday != 6
+          used_pto += 8
+        end
+      }
     end
+    if remaining_pto - used_pto >= 0
+      t.save!
 
-    flash[:success] = "Schedule Request Created"
-    redirect_to schedule_index_url
+      TimeRequestApprover.where(department: current_user.department, time_request_type: t.time_request_type).each do |approver|
+        r = TimeRequestApproval.new
+        r.time_request = t;
+        r.user = approver.user
+        r.approved = false
+        r.rejected = false
+        r.save!
+        UserMailer.approve_email(current_user, approver.user, t, r).deliver
+      end
+
+      flash[:success] = "Schedule Request Created"
+      redirect_to schedule_index_url
+    else
+      flash[:error] = "Schedule Request Failed.  This request would cause your PTO remaining to drop below 0."
+      redirect_to new_schedule_request_url
+    end
   end
 
   def show
@@ -67,6 +113,21 @@ class ScheduleController < ApplicationController
     end
 
     if DateTime.now < t.from
+      prev_used = 0
+      if t.from.to_date == t.to.to_date
+        if t.to - t.from > 8.hours
+          prev_used += 8
+        else
+          prev_used += (t.to - t.from).hours
+        end
+      else
+        (t.from.to_date..t.to.to_date).each { |d|
+          if d.wday != 0 && d.wday != 6
+            prev_used += 8
+          end
+        }
+      end
+
       t.user = current_user
       t.name = params[:name]
       t.comment = params[:comment]
@@ -81,17 +142,40 @@ class ScheduleController < ApplicationController
       rescue
         t.to = Date.strptime(params[:to], "%m/%d/%Y")
       end
-      t.save!
 
-      t.time_request_approval.each do |r|
-        r.approved = false
-        r.rejected = false
-        r.save!
-        UserMailer.reapprove_email(current_user, r.user, t, r).deliver
+      now_used = 0
+      if t.from.to_date == t.to.to_date
+        if t.to - t.from > 8.hours
+          now_used += 8
+        else
+          now_used += (t.to - t.from).hours
+        end
+      else
+        (t.from.to_date..t.to.to_date).each { |d|
+          if d.wday != 0 && d.wday != 6
+            now_used += 8
+          end
+        }
       end
 
-      flash[:success] = "Schedule Request Updated"
-      redirect_to schedule_url(t.id)
+      diff = prev_used - now_used
+
+      if remaining_pto - diff >= 0
+        t.save!
+
+        t.time_request_approval.each do |r|
+          r.approved = false
+          r.rejected = false
+          r.save!
+          UserMailer.reapprove_email(current_user, r.user, t, r).deliver
+        end
+
+        flash[:success] = "Schedule Request Updated"
+        redirect_to schedule_url(t.id)
+      else 
+        flash[:error] = "Schedule Request Update Failure.  This change would cause your remaining PTO to drop below 0."
+        redirect_to schedule_url(t.id)
+      end
     else 
       flash[:success] = "This Time Request has already past and cannot be updated."
       redirect_to schedule_url(t.id)
@@ -122,6 +206,7 @@ class ScheduleController < ApplicationController
   end
 
   def history
+    @remaining = current_user.yearly_pto_hour_allotment - remaining_pto
     @requests = TimeRequest.where("user_id = ? and \"to\"" < ?", current_user.id, DateTime.now).order(:from).page(params[:page])
   end
 

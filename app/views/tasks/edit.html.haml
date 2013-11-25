@@ -1,5 +1,10 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4
+			Completed Tasks
+	.clearfix
+	.offset
 	=form_tag(task_url(@task.id), method: "put", class: "form-horizontal") do
 		.pull-left
 			%h6 Edit Task

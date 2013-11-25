@@ -1,5 +1,18 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4
+			Past Schedule Requests
+	.clearfix
+	.offset
+	%h4
+		PTO Remaining:
+		= @remaining
+		hours
+	%p 
+		Note:
+		%i
+			This total does not include PTO requests that are still awaiting approval.
 	%table.table.table-striped
 		%thead
 			%th Request Name

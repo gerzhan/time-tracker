@@ -1,5 +1,12 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4
+			Team Schedule
+	.pull-right
+		%input.datepicker{ :type => "text", :id => "schedule_selected_date", :placeholder => "View Week" }
+	.clearfix
+	.offset
 	%table.table.table-striped
 		%thead
 			%th

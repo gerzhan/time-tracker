@@ -219,11 +219,11 @@ var ta, td;
     });
 
     // jQuery UI Datepicker
-    var datepickerSelector = '#datepicker-01';
+    var datepickerSelector = '.datepicker';
     $(datepickerSelector).datepicker({
       showOtherMonths: true,
       selectOtherMonths: true,
-      dateFormat: "d MM, yy",
+      dateFormat: "m/d/yy",
       yearRange: '-1:+1'
     }).prev('.btn').on('click', function (e) {
       e && e.preventDefault();
