@@ -31,6 +31,11 @@ TimeTracker::Application.routes.draw do
   put  'profile' => 'profile#update_password'
   post 'profile' => 'profile#update_profile'
 
+  get  'user_tasks_report' => 'reports#user_task_report'
+  get  'department_tasks_report' => 'reports#department_task_report'
+  get  'user_schedule_report' => 'reports#user_schedule_report'
+  get  'department_schedule_report' => 'reports#department_schedule_report'
+
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
