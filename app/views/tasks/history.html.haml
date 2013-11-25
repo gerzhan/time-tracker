@@ -1,5 +1,37 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4 Completed Tasks
+	.pull-right
+		%form.form-inline
+			.form-group
+				Start Date
+			.form-group
+				%input.form-control.datepicker{ :type => "text", :id => "completed_tasks_start", :placeholder => "Start Date", :value => params[:start] }
+			.form-group
+				End Date
+			.form-group
+				%input.form-control.datepicker{ :type => "text", :id => "completed_tasks_end", :placeholder => "End Date", :value => params[:end] }
+	.clearfix
+	.offset-start
+	:javascript
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+				['Task', 'Time'],
+				#{ javascript_data(@data) }
+			]);
+
+			var options = {
+				title: 'Task Report',
+				pieHole: 0.4,
+			};
+
+			var chart = new google.visualization.PieChart(document.getElementById('chart'));
+			chart.draw(data, options);
+		}
+	.col-md-offset-2.col-md-8{ :id => "chart", :style => "height: 500px; width: 750px;" }
 	.offset-start
 	%table.table.table-striped
 		%thead

@@ -136,6 +136,30 @@ class TasksController < ApplicationController
   end
 
   def history
-    @tasks = Task.where("user_id = ? and task_status_id = ?", current_user, TaskStatus.COMPLETED).page(params[:page])
+    if params[:start] && params[:end] && params[:start] != "" && params[:end] != ""
+      @tasks = Task.where("user_id = ? and task_status_id = ? and created_at >= ? and updated_at <= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:start], "%m/%d/%Y"), Date.strptime(params[:end], "%m/%d/%Y"))
+    elsif params[:start] && params[:start] != ""
+      @tasks = Task.where("user_id = ? and task_status_id = ? and created_at >= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:start], "%m/%d/%Y"))
+    elsif params[:end] && params[:end] != ""
+      @tasks = Task.where("user_id = ? and task_status_id = ? and updated_at <= ?", current_user, TaskStatus.COMPLETED, Date.strptime(params[:end], "%m/%d/%Y"))
+    else
+      @tasks = Task.where("user_id = ? and task_status_id = ?", current_user, TaskStatus.COMPLETED)
+    end
+
+    @data = {}
+    @tasks.each { |task|
+      if !@data["#{task.task_project.name} #{task.task_action.name} for #{task.task_customer.name}"]
+        @data["#{task.task_project.name} #{task.task_action.name} for #{task.task_customer.name}"] = 0
+      end
+
+      sum = 0.0
+      task.task_slot.each { |ts|
+        sum += ((ts.stop_time - ts.start_time) / 3600).round(2)
+      }
+
+      @data["#{task.task_project.name} #{task.task_action.name} for #{task.task_customer.name}"] += sum
+    }
+
+    @tasks = @tasks.page(params[:page])
   end
 end
