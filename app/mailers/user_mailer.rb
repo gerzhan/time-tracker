@@ -17,8 +17,8 @@ class UserMailer < ActionMailer::Base
     @requesting_user = requesting_user
     @approving_user = approving_user
     @time_request = time_request
-    @approve_link = root_url + "/approve/" + time_request_approval.id.to_s
-    @reject_link = root_url + "/reject/" + time_request_approval.id.to_s
+    @approve_link = approve_schedule_url(time_request_approval)
+    @reject_link = reject_schedule_url(time_request_approval)
     mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request")
   end
 
@@ -26,8 +26,8 @@ class UserMailer < ActionMailer::Base
     @requesting_user = requesting_user
     @approving_user = approving_user
     @time_request = time_request
-    @approve_link = root_url + "/approve/" + time_request_approval.id.to_s
-    @reject_link = root_url + "/reject/" + time_request_approval.id.to_s
+    @approve_link = approve_schedule_url(time_request_approval)
+    @reject_link = reject_schedule_url(time_request_approval)
     mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request Update")
   end
 

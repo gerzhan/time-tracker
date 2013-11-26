@@ -1,6 +1,6 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
-	=form_tag(root_url + "/reject/" + @time_request_approval.id.to_s,method: "post", class: "form-horizontal") do
+	=form_tag(confirm_reject_schedule(@time_request_approval), method: "post", class: "form-horizontal") do
 		.pull-left
 			%h6 Reject Schedule Request
 		.pull-right

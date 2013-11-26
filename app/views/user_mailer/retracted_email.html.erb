@@ -4,7 +4,7 @@
 <head>
     <!-- NAME: 1 COLUMN -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>DOE Weekly Fuel Update</title>
+    <title>Time Tracker Update</title>
 
     <!--[if gte mso 6]>
         <style>
@@ -441,8 +441,8 @@
                                                                         <td valign="top" class="mcnTextContent" style="padding-top: 9px;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;">
 
                                                                             <h1 style="margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 40px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -1px;text-align: left;color: #606060 !important;">Time Request Retracted</h1>
-                                                                            <h3 style="margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -.5px;text-align: left;color: #606060 !important;">Hello, <%= @approving_user.username %></h3>
-                                                                            <p style="margin: 1em 0;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;"><%= @retracting_user.username %> has retracted their <%= @time_request.time request_type ? @time_request.time_request_type.name : "" %> schedule request <%= @time_request.name %> from <%= @time_request.from.strftime("%m/%d/%Y %H:%M") %> to <%= @time_request.to.strftime("%m/%d/%Y %H:%M") %>.</p>
+                                                                            <h3 style="margin: 0;padding: 0;display: block;font-family: Helvetica;font-size: 18px;font-style: normal;font-weight: bold;line-height: 125%;letter-spacing: -.5px;text-align: left;color: #606060 !important;">Hello, <%= @approving_user.first_name + " " + @approving_user.last_name %></h3>
+                                                                            <p style="margin: 1em 0;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #606060;font-family: Helvetica;font-size: 15px;line-height: 150%;text-align: left;"><%= @retracting_user.first_name + " " + @retracting_user.last_name %> has retracted their <%= @time_request.time request_type ? @time_request.time_request_type.name : "" %> schedule request <%= @time_request.name %> from <%= @time_request.from.strftime("%m/%d/%Y %H:%M") %> to <%= @time_request.to.strftime("%m/%d/%Y %H:%M") %>.</p>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>

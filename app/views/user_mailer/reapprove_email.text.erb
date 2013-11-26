@@ -2,9 +2,9 @@ Schedule Request Update
 
 =======================
 
-Hello, <%= @approving_user.username %></h3>
+Hello, <%= @approving_user.first_name + " " + @approving_user.last_name %></h3>
 
-<%= @requesting_user.username %> has changed a schedule request that requires your approval.
+<%= @requesting_user.first_name + " " + @requesting_user.last_name %> has changed a schedule request that requires your approval.
 
 Details:
 

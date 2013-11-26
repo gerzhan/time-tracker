@@ -2,6 +2,6 @@ Schedule Request Rejected
 
 =========================
 
-Hello, <%= @user.username %>
+Hello, <%= @user.first_name + " " + @user.last_name %>
 
-Your schedule request <%= @time_request.name %> was rejected by <%= @rejecting_user.username %> with a reason of "<%= @reason %>".
+Your schedule request <%= @time_request.name %> was rejected by <%= @rejecting_user.first_name + " " + @rejecting_user.last_name %> with a reason of "<%= @reason %>".
