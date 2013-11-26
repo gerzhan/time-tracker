@@ -68,13 +68,13 @@ var ta, td;
     $('#task_action').select2({
       allowClear: true,
       matcher: function(term, text, opt) {
-       return opt.attr("task_project") == $('#task_project').val();
+        return text.toUpperCase().indexOf(term.toUpperCase()) >= 0 && opt.attr("task_project") == $('#task_project').val();
       }
     });
     $('#task_detail').select2({
       allowClear: true,
       matcher: function(term, text, opt) {
-       return opt.attr("task_action") == $('#task_action').val();
+        return text.toUpperCase().indexOf(term.toUpperCase()) >= 0 && opt.attr("task_action") == $('#task_action').val();
       }
     });
 
