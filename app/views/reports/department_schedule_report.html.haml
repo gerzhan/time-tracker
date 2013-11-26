@@ -8,12 +8,10 @@
 			.form-group
 				Department
 			.form-group
-				%label.sr-only Department
 				=select_tag "schedule_selected_department", options_for_select(@departments.collect { |t| [t.name, t.id] }, @selected_department ? @selected_department.id : ""), :include_blank => true
 			.form-group
 				Week
 			.form-group
-				%label.sr-only Week
 				%input.form-control.datepicker{ :type => "text", :id => "schedule_selected_date", :placeholder => "View Week", :value => params[:week] }
 	.clearfix
 	.offset

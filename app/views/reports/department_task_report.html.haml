@@ -1,2 +1,24 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4
+			Department Tasks
+	.pull-right
+		%form.form-inline
+			.form-group
+				Department
+			.form-group
+				=select_tag "tasks_selected_department", options_for_select(@departments.collect { |t| [t.name, t.id] }, @selected_department ? @selected_department.id : ""), :include_blank => true
+			.form-group
+				Start Date
+			.form-group
+				%input.form-control.datepicker{ :type => "text", :id => "tasks_start", :placeholder => "Start Date", :value => params[:start] || @start.strftime("%m/%d/%Y") }
+			.form-group
+				End Date
+			.form-group
+				%input.form-control.datepicker{ :type => "text", :id => "tasks_end", :placeholder => "End Date", :value => params[:end] || @end.strftime("%m/%d/%Y") }
+	.clearfix
+	.offset-start
+
+	.offset-start
+	

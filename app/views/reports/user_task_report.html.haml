@@ -1,2 +1,25 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
+	.pull-left
+		%h4
+			User Tasks
+	.pull-right
+		%form.form-inline
+			.form-group
+				User
+			.form-group
+				=select_tag "tasks_selected_user", options_for_select(@users.collect { |t| [t.username, t.id] }, @selected_user ? @selected_user.id : ""), :include_blank => true
+			.form-group
+				Start Date
+			.form-group
+				%input.form-control.datepicker{ :type => "text", :id => "tasks_start", :placeholder => "Start Date", :value => params[:start] || @start.strftime("%m/%d/%Y") }
+			.form-group
+				End Date
+			.form-group
+				%input.form-control.datepicker{ :type => "text", :id => "tasks_end", :placeholder => "End Date", :value => params[:end] || @end.strftime("%m/%d/%Y") }
+	.clearfix
+	.offset-start
+
+	.offset-start
+	
+
