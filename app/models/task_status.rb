@@ -18,4 +18,8 @@ class TaskStatus < ActiveRecord::Base
 		TaskStatus.find_by_name("COMPLETED")
 	end
 
+	def self.SCHEDULED
+		TaskStatus.find_by_name("SCHEDULED")
+	end
+
 end

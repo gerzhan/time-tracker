@@ -22,6 +22,8 @@ class ProfileController < ApplicationController
 	end
 
 	def update_profile
+		current_user.first_name = params[:first_name]
+		current_user.last_name = params[:last_name]
 		current_user.username = params[:username]
 		current_user.email = params[:email]
 		current_user.save!

@@ -12,6 +12,7 @@ class CreateTasks < ActiveRecord::Migration
       t.integer :task_status_id
 
       t.string :comment
+      t.timestamp :scheduled_for
 
       t.timestamps
     end

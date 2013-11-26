@@ -3,7 +3,7 @@ TimeTracker::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'tasks#index'
+  root 'home#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -14,34 +14,50 @@ TimeTracker::Application.routes.draw do
   post 'forgot_password' => 'login#deliver_reset_instructions'
   get  'change_password' => 'login#change_password'
   post 'change_password' => 'login#changed_password'
-
-  get  'tasks_history' => 'tasks#history'
-  get  'schedule_history' => 'schedule#history'
-  get  'schedule_team' => 'schedule#team'
-
-  get  'tasks/pause/:id' => 'tasks#pause'
-  get  'tasks/resume/:id' => 'tasks#resume'
-  get  'tasks/stop/:id' => 'tasks#stop'
-
-  get  'approve/:id' => 'schedule#approve'
-  get  'reject/:id' => 'schedule#reject'
-  post 'reject/:id' => 'schedule#confirm_reject'
-
+  
   get  'profile' => 'profile#index'
   put  'profile' => 'profile#update_password'
   post 'profile' => 'profile#update_profile'
 
-  get  'user_tasks_report' => 'reports#user_task_report'
-  get  'department_tasks_report' => 'reports#department_task_report'
-  get  'user_schedule_report' => 'reports#user_schedule_report'
-  get  'department_schedule_report' => 'reports#department_schedule_report'
+  get  'reports/user_tasks' => 'reports#user_task_report'
+  get  'reports/department_tasks' => 'reports#department_task_report'
+  get  'reports/user_schedule' => 'reports#user_schedule_report'
+  get  'reports/department_schedule' => 'reports#department_schedule_report'
+
+  get  'scheduled_tasks/new' => 'tasks#scheduled_new', :as => :new_scheduled_task
+  post 'scheduled_tasks' => 'tasks#scheduled_create', :as => :scheduled_tasks
+  get  'scheduled_tasks/:id' => 'tasks#scheduled_show', :as => :scheduled_task
+  get  'scheduled_tasks/:id/edit' => 'tasks#scheduled_edit', :as => :edit_scheduled_task
+  put  'scheduled_tasks/:id' => 'tasks#scheduled_update'
+
+  get  'tasks/history' => 'tasks#history'
+
+  get  'schedule/history' => 'schedule#history'
+  get  'schedule/team' => 'schedule#team'
 
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
-  resources :tasks
-  resources :schedule
+  resources :tasks do
+    member do
+      get 'pause'
+      get 'resume'
+      get 'stop'
+      get 'duplicate'
+    end
+
+    resources :task_slots
+  end
+  
+  resources :schedule do
+    member do
+      get  'approve'
+      get  'reject'
+      post 'confirm_reject'
+    end
+  end
+
   resources :users
   resources :departments do
     resources :time_request_approvers

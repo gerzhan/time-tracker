@@ -10,7 +10,7 @@ class CreateTaskStatuses < ActiveRecord::Migration
     t.name = "STARTED"
     t.save!
 
-	t = TaskStatus.new
+	  t = TaskStatus.new
     t.name = "RESUMED"
     t.save!
 
@@ -20,6 +20,10 @@ class CreateTaskStatuses < ActiveRecord::Migration
 
     t = TaskStatus.new
     t.name = "COMPLETED"
-    t.save!    
+    t.save!
+
+    t = TaskStatus.new
+    t.name = "SCHEDULED"
+    t.save!
   end
 end

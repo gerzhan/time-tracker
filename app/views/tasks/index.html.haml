@@ -7,6 +7,9 @@
 		%a.btn.btn-primary{ :href => new_task_url }
 			%i.fui-plus
 			Start New Task
+		%a.btn.btn-info{ :href => new_scheduled_task_url }
+			%i.fui-plus
+			Schedule New Task
 	.clearfix
 	.offset-start
 	%table.table.table-striped
@@ -20,8 +23,12 @@
 		- for task in @tasks
 			%tr
 				%td 
-					%a{ :href => task_url(task.id) } 
-						=task.name
+					- if task.task_status == TaskStatus.SCHEDULED
+						%a{ :href => scheduled_task_url(task.id) } 
+							=task.name
+					- else
+						%a{ :href => task_url(task.id) } 
+							=task.name
 				%td= task.task_type.name
 				%td= task.task_project.name
 				%td= task.task_action.name
@@ -32,16 +39,19 @@
 						%span.label.label-success Resumed
 					- elsif task.task_status == TaskStatus.PAUSED
 						%span.label.label-warning Paused
+					- elsif task.task_status == TaskStatus.SCHEDULED
+						%span.label.label-info Scheduled
 				%td
-					- if task.task_status == TaskStatus.STARTED || task.task_status == TaskStatus.RESUMED
-						%a.btn.btn-warning{ :href => "/tasks/pause/#{task.id}" } 
-							%i.unicon-pause
-							Pause
-					- elsif task.task_status == TaskStatus.PAUSED
-						%a.btn.btn-success{ :href => "/tasks/resume/#{task.id}" } 
-							%i.unicon-play
-							Resume
-					%a.btn.btn-danger{ :href => "/tasks/stop/#{task.id}" } 
-						%i.unicon-stop
-						Complete
+					- if task.task_status != TaskStatus.SCHEDULED
+						- if task.task_status == TaskStatus.STARTED || task.task_status == TaskStatus.RESUMED
+							%a.btn.btn-warning{ :href => pause_task_url(task.id) } 
+								%i.unicon-pause
+								Pause
+						- elsif task.task_status == TaskStatus.PAUSED
+							%a.btn.btn-success{ :href => resume_task_url(task.id) } 
+								%i.unicon-play
+								Resume
+						%a.btn.btn-danger{ :href => stop_task_url(task.id) } 
+							%i.unicon-stop
+							Complete
 	= will_paginate @tasks, renderer: BootstrapPagination::Rails

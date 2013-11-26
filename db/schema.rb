@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20131120190610) do
     t.integer  "task_detail_id"
     t.integer  "task_status_id"
     t.string   "comment"
+    t.datetime "scheduled_for"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -125,6 +126,8 @@ ActiveRecord::Schema.define(version: 20131120190610) do
   end
 
   create_table "users", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "username",                        null: false
     t.string   "email"
     t.string   "crypted_password"

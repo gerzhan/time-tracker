@@ -1,0 +1,2 @@
+class TaskSlotController < ApplicationController
+end

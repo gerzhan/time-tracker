@@ -3,6 +3,14 @@
 	=form_tag(profile_url, method: "post", class: "form-horizontal") do
 		%h4 Update Profile
 		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 First Name
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "first_name", :placeholder => "Username", :value => current_user.first_name }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Last Name
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "last_name", :placeholder => "Username", :value => current_user.last_name }
+		.form-group
 			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Username
 			.col-xs-10.col-sm-10.col-md-10.col-lg-10
 				%input.form-control{ :type => "text", :name => "username", :placeholder => "Username", :value => current_user.username }

@@ -4,12 +4,20 @@ class TasksController < ApplicationController
       @tasks = Task.where("user_id = ? and task_status_id in (?)", current_user, [TaskStatus.STARTED, TaskStatus.RESUMED, TaskStatus.PAUSED]).page(params[:page])
   end
 
+  def scheduled_new
+
+  end
+
   def new
       @types = TaskType.order(:name)
       @customers = TaskCustomer.order(:name)
       @projects = TaskProject.order(:name)
       @actions = TaskAction.order(:name)
       @details = TaskDetail.order(:name)
+  end
+
+  def scheduled_create
+
   end
 
   def create
@@ -34,12 +42,20 @@ class TasksController < ApplicationController
     redirect_to tasks_url
   end
 
+  def show_scheduled
+
+  end
+
   def show
     @task = Task.find(params[:id])
 
     if @task.user != current_user
       not_authorized
     end
+  end
+
+  def scheduled_edit
+
   end
 
   def edit
@@ -54,6 +70,10 @@ class TasksController < ApplicationController
     @projects = TaskProject.order(:name)
     @actions = TaskAction.order(:name)
     @details = TaskDetail.order(:name)
+  end
+
+  def scheduled_update
+
   end
 
   def update
