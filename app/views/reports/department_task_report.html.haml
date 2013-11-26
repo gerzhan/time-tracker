@@ -19,6 +19,39 @@
 				%input.form-control.datepicker{ :type => "text", :id => "tasks_end", :placeholder => "End Date", :value => params[:end] || @end.strftime("%m/%d/%Y") }
 	.clearfix
 	.offset-start
+	:javascript
+		google.load("visualization", "1", {packages:["corechart"]});
+		google.setOnLoadCallback(drawChart);
+		function drawChart() {
+			var data = google.visualization.arrayToDataTable([
+				['Task', 'Time'],
+				#{ javascript_data(@data) }
+			]);
 
+			var options = {
+				title: 'Task Report',
+				pieHole: 0.4,
+			};
+
+			var chart = new google.visualization.PieChart(document.getElementById('chart'));
+			chart.draw(data, options);
+		}
+	.col-md-offset-2.col-md-8{ :id => "chart", :style => "height: 500px; width: 750px;" }
 	.offset-start
-	
+	%table.table.table-striped
+		%thead
+			%th Username
+			%th Task Name
+			%th Type
+			%th Project
+			%th Action
+			%th Total Time
+		- for task in @tasks
+			%tr
+				%td= task.user.username
+				%td= task.name
+				%td= task.task_type.name
+				%td= task.task_project.name
+				%td= task.task_action.name
+				%td= task.task_slot.inject(0) { |i, ts| i += ((ts.stop_time ? (ts.stop_time - ts.start_time) : (Time.now - ts.start_time)) / 3600).round(2) }
+	= will_paginate @tasks, renderer: BootstrapPagination::Rails

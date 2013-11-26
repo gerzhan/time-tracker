@@ -21,6 +21,21 @@ class ReportsController < ApplicationController
 	    if !params[:end] || params[:end] == ""
 	      params[:end] = @end.strftime("%m/%d/%Y")
 	    end
+
+	    task_slots = TaskSlot.where("start_time >= ? and stop_time <= ? and task_id in (?)", @start, @end, Task.where(user: @selected_user).collect { |x| x.id })
+
+	    @tasks = Task.where("id in (?)", task_slots.collect { |x| x.id })
+
+	    @data = {}
+	    task_slots.each { |task_slot|
+	      if !@data["#{task_slot.task.task_project.name} #{task_slot.task.task_action.name} for #{task_slot.task.task_customer.name}"]
+	        @data["#{task_slot.task.task_project.name} #{task_slot.task.task_action.name} for #{task_slot.task.task_customer.name}"] = 0
+	      end
+
+	      @data["#{task_slot.task.task_project.name} #{task_slot.task.task_action.name} for #{task_slot.task.task_customer.name}"] += ((task_slot.stop_time - task_slot.start_time) / 3600).round(2)
+	    }
+
+	    @tasks = @tasks.page(params[:page])
 	end
 
 	def department_task_report
@@ -44,6 +59,21 @@ class ReportsController < ApplicationController
 	    if !params[:end] || params[:end] == ""
 	      params[:end] = @end.strftime("%m/%d/%Y")
 	    end
+
+	    task_slots = TaskSlot.where("start_time >= ? and stop_time <= ? and task_id in (?)", @start, @end, Task.where("user_id in (?)", User.where(department: @selected_department).collect { |y| y.id }).collect { |x| x.id })
+
+	    @tasks = Task.where("id in (?)", task_slots.collect { |x| x.id })
+
+	    @data = {}
+	    task_slots.each { |task_slot|
+	      if !@data["#{task_slot.task.task_project.name} #{task_slot.task.task_action.name} for #{task_slot.task.task_customer.name}"]
+	        @data["#{task_slot.task.task_project.name} #{task_slot.task.task_action.name} for #{task_slot.task.task_customer.name}"] = 0
+	      end
+
+	      @data["#{task_slot.task.task_project.name} #{task_slot.task.task_action.name} for #{task_slot.task.task_customer.name}"] += ((task_slot.stop_time - task_slot.start_time) / 3600).round(2)
+	    }
+
+	    @tasks = @tasks.page(params[:page])
 	end
 
 	def user_schedule_report
