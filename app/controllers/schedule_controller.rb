@@ -321,7 +321,7 @@ class ScheduleController < ApplicationController
       file.write "BEGIN:VEVENT\n"
       file.write "ORGANIZER;CN=#{creator.first_name} #{creator.last_name}:MAILTO:#{creator.email}\n"
       approvers.each do |approver|
-        file.write "ATTENDEE;ROLE=NON-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=FALSE;CN=#{approver.first_name} #{approver.last_name}:MAILTO:#{approver.email}\n"
+        file.write "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE;CN=#{approver.first_name} #{approver.last_name}:MAILTO:#{approver.email}\n"
       end
       file.write "DESCRIPTION;LANGUAGE=en-US:#{event.comment}\n"
       file.write "SUMMARY;LANGUAGE=en-US:#{event.time_request_type ? event.time_request_type.name : "Event"} #{event.name}\n"
@@ -372,7 +372,7 @@ class ScheduleController < ApplicationController
       file.write "BEGIN:VEVENT\n"
       file.write "ORGANIZER;CN=#{creator.first_name} #{creator.last_name}:MAILTO:#{creator.email}\n"
       approvers.each do |approver|
-        file.write "ATTENDEE;ROLE=NON-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=FALSE;CN=#{approver.first_name} #{approver.last_name}:MAILTO:#{approver.email}\n"
+        file.write "ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE;CN=#{approver.first_name} #{approver.last_name}:MAILTO:#{approver.email}\n"
       end
       file.write "DESCRIPTION;LANGUAGE=en-US:#{event.comment}\n"
       file.write "SUMMARY;LANGUAGE=en-US:#{event.time_request_type ? event.time_request_type.name : "Event"} #{event.name}\n"
