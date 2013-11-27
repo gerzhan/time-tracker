@@ -1,0 +1,17 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	=form_tag(task_task_slots_url(@task), method: "post", class: "form-horizontal") do
+		.pull-left
+			%h6 Create New Task Slot
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Start Time
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "start_time", :placeholder => "mm/dd/yyyy hh:mm" }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Stop Time
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "stop_time", :placeholder => "mm/dd/yyyy hh:mm" }

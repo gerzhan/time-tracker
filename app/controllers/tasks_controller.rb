@@ -34,11 +34,6 @@ class TasksController < ApplicationController
     t.task_status = TaskStatus.SCHEDULED
     t.save!
 
-    ts = TaskSlot.new
-    ts.task = t
-    ts.start_time = Time.now
-    ts.save!
-
     flash[:success] = "Scheduled New Task"
     redirect_to tasks_url
   end

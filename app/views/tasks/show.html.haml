@@ -70,7 +70,7 @@
 					%td= slot.stop_time ? slot.stop_time.strftime("%H:%M") : ""
 					%td= ((slot.stop_time ? (slot.stop_time - slot.start_time) : (Time.now - slot.start_time)) / 3600).round(2)
 					%td
-						= form_tag(task_task_slot_url(@task, slot), :method => "delete") do
+						= form_tag(task_task_slot_url(@task, slot), :method => "delete") do 
 							%button.btn.btn-danger
 								%i.icon.unicon-trash
 								Delete

@@ -1,0 +1,20 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-left
+		%h6 Task Slot
+	.pull-right
+		= form_tag(task_task_slot_url(@task, @task_slot), :method => "delete") do
+			%A.btn.btn-primary{ :href => edit_task_task_slot_url(@task, @task_slot) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger
+				%i.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Start Time
+		%label= @task_slot.start_time.strftime("%m/%d/%Y %H:%M")
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Stop Time
+		%label= @task_slot.stop_time.strftime("%m/%d/%Y %H:%M")
