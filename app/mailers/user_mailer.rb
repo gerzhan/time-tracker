@@ -1,3 +1,5 @@
+require 'base64'
+
 class UserMailer < ActionMailer::Base
   default from: "system@time-tracker.com"
 
@@ -35,18 +37,12 @@ class UserMailer < ActionMailer::Base
     @retracting_user = retracting_user
     @approving_user = approving_user
     @time_request = time_request
-
-    attachments.inline['calendar_event.ics'] = { mime_type: "text/Calendar", data: File.read("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics") }
-
     mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request Retracted")
   end
 
   def approved_email(user, time_request)
     @user = user
     @time_request = time_request
-
-    attachments.inline['calendar_event.ics'] = { mime_type: "text/Calendar", data: File.read("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics") }
-
     mail(:to => user.email, :subject => "#{time_request.name} Approved")
   end
 
@@ -56,5 +52,14 @@ class UserMailer < ActionMailer::Base
     @time_request = time_request
     @reason = reason
     mail(:to => user.email, :subject => "#{time_request.name} Rejected by #{rejecting_user.username}")
+  end
+
+  def send_calendar_request(user, time_request)
+    body = Base64.encode64(File.open("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics","r").read)
+
+    mail(to: user.email,
+         body: body,
+         content_type: "text/calendar",
+         subject: "#{time_request.time_request_type ? time_request.time_request_type.name : ""} #{time_request.name}")
   end
 end
