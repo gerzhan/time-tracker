@@ -55,9 +55,10 @@ class UserMailer < ActionMailer::Base
   def send_calendar_request(user, time_request)
     body = File.open("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics","r").read
 
+    content_type "text/Calendar"
+
     mail(to: user.email,
          body: body,
-         content_type: "text/calendar",
          subject: "#{time_request.time_request_type ? time_request.time_request_type.name : ""} #{time_request.name}")
   end
 end
