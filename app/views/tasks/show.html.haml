@@ -15,7 +15,7 @@
 				%a.btn.btn-success{ :href => resume_task_url(@task) } 
 					%i.unicon-play
 					Resume
-			%a.btn.btn-danger{ :href => complete_task_url(@task) } 
+			%a.btn.btn-danger{ :href => stop_task_url(@task) } 
 				%i.unicon-stop
 				Complete
 		- else
@@ -44,25 +44,43 @@
 		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Detail
 		%label= @task.task_detail ? @task.task_detail.name : ""
 	.offset-start
-	%h4 Time Slots
+	.pull-left
+		%h4 Time Slots
+	.pull-right
+		%a.btn.btn-primary{ :href => new_task_task_slot_url(@task) }
+			%i.icon.unicon-plus
+			Create New Time Slot
+	.clearfix
 	%table.table.table-striped
 		%thead
+			%th View
 			%th Date
 			%th Start
 			%th Stop
 			%th Hours
+			%th Delete
 		%tbody
 			- for slot in @task.task_slot
 				%tr
+					%td
+						%a{ :href => task_task_slot_url(@task, slot) }
+							view
 					%td= slot.created_at.strftime("%m/%d/%Y")
 					%td= slot.start_time.strftime("%H:%M")
 					%td= slot.stop_time ? slot.stop_time.strftime("%H:%M") : ""
 					%td= ((slot.stop_time ? (slot.stop_time - slot.start_time) : (Time.now - slot.start_time)) / 3600).round(2)
+					%td
+						= form_tag(task_task_slot_url(@task, slot), :method => "delete") do
+							%button.btn.btn-danger
+								%i.icon.unicon-trash
+								Delete
 			%tr
 				%td
 					%strong Total
 				%td
 				%td
+				%td
 				%td= @task.task_slot.inject(0) { |i, ts| i += ((ts.stop_time ? (ts.stop_time - ts.start_time) : (Time.now - ts.start_time)) / 3600).round(2) }
+				%td
 
 
