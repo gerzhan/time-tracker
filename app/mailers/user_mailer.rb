@@ -36,7 +36,7 @@ class UserMailer < ActionMailer::Base
     @approving_user = approving_user
     @time_request = time_request
 
-    attachments.inline['calendar_event.ics'] = { mime_type: "text/Calendar", content: File.read("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics") }
+    attachments.inline['calendar_event.ics'] = { mime_type: "text/Calendar", data: File.read("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics") }
 
     mail(:to => approving_user.email, :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} Schedule Request Retracted")
   end
@@ -45,7 +45,7 @@ class UserMailer < ActionMailer::Base
     @user = user
     @time_request = time_request
 
-    attachments.inline['calendar_event.ics'] = { mime_type: "text/Calendar", content: File.read("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics") }
+    attachments.inline['calendar_event.ics'] = { mime_type: "text/Calendar", data: File.read("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics") }
 
     mail(:to => user.email, :subject => "#{time_request.name} Approved")
   end
