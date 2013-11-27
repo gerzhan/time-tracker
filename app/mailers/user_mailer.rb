@@ -1,5 +1,3 @@
-require 'base64'
-
 class UserMailer < ActionMailer::Base
   default from: "system@time-tracker.com"
 
@@ -55,7 +53,7 @@ class UserMailer < ActionMailer::Base
   end
 
   def send_calendar_request(user, time_request)
-    body = Base64.encode64(File.open("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics","r").read)
+    body = File.open("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics","r").read
 
     mail(to: user.email,
          body: body,
