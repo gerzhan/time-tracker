@@ -40,6 +40,7 @@
 			%th Project
 			%th Action
 			%th Total Time
+			%th Controls
 		- for task in @tasks
 			%tr
 				%td 
@@ -49,4 +50,6 @@
 				%td= task.task_project.name
 				%td= task.task_action.name
 				%td= task.task_slot.inject(0) { |i, ts| i += ((ts.stop_time ? (ts.stop_time - ts.start_time) : (Time.now - ts.start_time)) / 3600).round(2) }
+				%td
+					%a.btn.btn-info{ :href => duplicate_task_url(task) } Duplicate
 	= will_paginate @tasks, renderer: BootstrapPagination::Rails

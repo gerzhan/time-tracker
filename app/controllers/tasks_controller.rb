@@ -1,11 +1,15 @@
 class TasksController < ApplicationController
   
   def index
-      @tasks = Task.where("user_id = ? and task_status_id in (?)", current_user, [TaskStatus.STARTED, TaskStatus.RESUMED, TaskStatus.PAUSED]).page(params[:page])
+      @tasks = Task.where("user_id = ? and task_status_id in (?)", current_user, [TaskStatus.STARTED, TaskStatus.RESUMED, TaskStatus.PAUSED, TaskStatus.SCHEDULED]).page(params[:page])
   end
 
   def scheduled_new
-
+      @types = TaskType.order(:name)
+      @customers = TaskCustomer.order(:name)
+      @projects = TaskProject.order(:name)
+      @actions = TaskAction.order(:name)
+      @details = TaskDetail.order(:name)
   end
 
   def new
@@ -17,13 +21,33 @@ class TasksController < ApplicationController
   end
 
   def scheduled_create
+    t = Task.new
+    t.name = params[:name]
+    t.comment = params[:comment]
+    t.scheduled_for = DateTime.strptime(params[:scheduled_for], "%m/%d/%Y %H:%M")
+    t.task_type = (params[:task_type] != "" ? TaskType.find(params[:task_type]) : nil)
+    t.task_customer = (params[:task_customer] != "" ? TaskCustomer.find(params[:task_customer]) : nil)
+    t.task_project = (params[:task_project] != "" ? TaskProject.find(params[:task_project]) : nil)
+    t.task_action = (params[:task_action] != "" ? TaskAction.find(params[:task_action]) : nil)
+    t.task_detail = (params[:task_detail] != "" ? TaskDetail.find(params[:task_detail]) : nil)
+    t.user = current_user
+    t.task_status = TaskStatus.SCHEDULED
+    t.save!
 
+    ts = TaskSlot.new
+    ts.task = t
+    ts.start_time = Time.now
+    ts.save!
+
+    flash[:success] = "Scheduled New Task"
+    redirect_to tasks_url
   end
 
   def create
     t = Task.new
     t.name = params[:name]
     t.comment = params[:comment]
+    t.scheduled_for = DateTime.now
     t.task_type = (params[:task_type] != "" ? TaskType.find(params[:task_type]) : nil)
     t.task_customer = (params[:task_customer] != "" ? TaskCustomer.find(params[:task_customer]) : nil)
     t.task_project = (params[:task_project] != "" ? TaskProject.find(params[:task_project]) : nil)
@@ -42,8 +66,12 @@ class TasksController < ApplicationController
     redirect_to tasks_url
   end
 
-  def show_scheduled
+  def scheduled_show
+    @task = Task.find(params[:id])
 
+    if @task.user != current_user
+      not_authorized
+    end
   end
 
   def show
@@ -55,7 +83,17 @@ class TasksController < ApplicationController
   end
 
   def scheduled_edit
+    @task = Task.find(params[:id])
 
+    if @task.user != current_user
+      not_authorized
+    end
+
+    @types = TaskType.order(:name)
+    @customers = TaskCustomer.order(:name)
+    @projects = TaskProject.order(:name)
+    @actions = TaskAction.order(:name)
+    @details = TaskDetail.order(:name)
   end
 
   def edit
@@ -73,7 +111,26 @@ class TasksController < ApplicationController
   end
 
   def scheduled_update
+    t = Task.find(params[:id])
 
+    if t.user != current_user
+      not_authorized
+    end
+
+    t.name = params[:name]
+    t.comment = params[:comment]
+    t.scheduled_for = DateTime.strptime(params[:scheduled_for], "%m/%d/%Y %H:%M")
+    t.task_type = (params[:task_type] != "" ? TaskType.find(params[:task_type]) : nil)
+    t.task_customer = (params[:task_customer] != "" ? TaskCustomer.find(params[:task_customer]) : nil)
+    t.task_project = (params[:task_project] != "" ? TaskProject.find(params[:task_project]) : nil)
+    t.task_action = (params[:task_action] != "" ? TaskAction.find(params[:task_action]) : nil)
+    t.task_detail = (params[:task_detail] != "" ? TaskDetail.find(params[:task_detail]) : nil)
+    t.user = current_user
+    t.task_status = TaskStatus.STARTED
+    t.save!
+
+    flash[:success] = "Task Updated"
+    redirect_to task_url(t.id)
   end
 
   def update
@@ -96,6 +153,48 @@ class TasksController < ApplicationController
 
     flash[:success] = "Task Updated"
     redirect_to task_url(t.id)
+  end
+
+  def scheduled_destroy
+    t = Task.find(params[:id])
+
+    if t.user != current_user
+      not_authorized
+    end
+
+    t.delete
+
+    flash[:success] = "Scheduled Task Deleted"
+    redirect_to tasks_url
+  end
+
+  def duplicate
+    to = Task.find(params[:id])
+
+    if to.user != current_user && to.task_status != TaskStatus.COMPLETED
+      not_authorized
+    end
+
+    t = Task.new
+    t.name = to.name
+    t.comment = to.comment
+    t.scheduled_for = DateTime.now
+    t.task_type = to.task_type
+    t.task_customer = to.task_customer
+    t.task_project = to.task_project
+    t.task_action = to.task_action
+    t.task_detail = to.task_detail
+    t.user = current_user
+    t.task_status = TaskStatus.STARTED
+    t.save!
+
+    ts = TaskSlot.new
+    ts.task = t
+    ts.start_time = Time.now
+    ts.save!
+
+    flash[:success] = "Duplicted Task"
+    redirect_to tasks_url
   end
 
   def pause

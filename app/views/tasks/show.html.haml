@@ -8,16 +8,18 @@
 			Edit
 		- if @task.task_status != TaskStatus.COMPLETED
 			- if @task.task_status == TaskStatus.STARTED || @task.task_status == TaskStatus.RESUMED
-				%a.btn.btn-warning{ :href => "/tasks/pause/#{@task.id}" } 
+				%a.btn.btn-warning{ :href => pause_task_url(@task) } 
 					%i.unicon-pause
 					Pause
 			- elsif @task.task_status == TaskStatus.PAUSED
-				%a.btn.btn-success{ :href => "/tasks/resume/#{@task.id}" } 
+				%a.btn.btn-success{ :href => resume_task_url(@task) } 
 					%i.unicon-play
 					Resume
-			%a.btn.btn-danger{ :href => "/tasks/stop/#{@task.id}" } 
+			%a.btn.btn-danger{ :href => complete_task_url(@task) } 
 				%i.unicon-stop
 				Complete
+		- else
+			%a.btn.btn-info{ :href => duplicate_task_url(task) } Duplicate
 	.clearfix
 	.offset-start
 	.form-group

@@ -24,11 +24,12 @@ TimeTracker::Application.routes.draw do
   get  'reports/user_schedule' => 'reports#user_schedule_report'
   get  'reports/department_schedule' => 'reports#department_schedule_report'
 
-  get  'scheduled_tasks/new' => 'tasks#scheduled_new', :as => :new_scheduled_task
-  post 'scheduled_tasks' => 'tasks#scheduled_create', :as => :scheduled_tasks
-  get  'scheduled_tasks/:id' => 'tasks#scheduled_show', :as => :scheduled_task
-  get  'scheduled_tasks/:id/edit' => 'tasks#scheduled_edit', :as => :edit_scheduled_task
-  put  'scheduled_tasks/:id' => 'tasks#scheduled_update'
+  get    'scheduled_tasks/new' => 'tasks#scheduled_new', :as => :new_scheduled_task
+  post   'scheduled_tasks' => 'tasks#scheduled_create', :as => :scheduled_tasks
+  get    'scheduled_tasks/:id' => 'tasks#scheduled_show', :as => :scheduled_task
+  get    'scheduled_tasks/:id/edit' => 'tasks#scheduled_edit', :as => :edit_scheduled_task
+  put    'scheduled_tasks/:id' => 'tasks#scheduled_update'
+  delete 'scheduled_tasks/:id' => 'tasks#scheduled_destroy'
 
   get  'tasks/history' => 'tasks#history'
 

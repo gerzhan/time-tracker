@@ -54,7 +54,11 @@
 						%a.btn.btn-danger{ :href => stop_task_url(task.id) } 
 							%i.unicon-stop
 							Complete
-	= will_paginate @tasks, renderer: BootstrapPagination::Rails
+					- else
+						= form_tag(scheduled_task_url(task), :method => "delete") do
+							%button.btn.btn-danger
+								%i.unicon-trash
+								Delete
 	%h4.offset-start Recently Completed Tasks
 	%table.table.table-striped
 		%thead
@@ -62,6 +66,7 @@
 			%th Type
 			%th Project
 			%th Action
+			%th Total Time
 			%th Controls
 		- for task in @finished_tasks
 			%tr
@@ -71,6 +76,6 @@
 				%td= task.task_type.name
 				%td= task.task_project.name
 				%td= task.task_action.name
+				%td= task.task_slot.inject(0) { |i, ts| i += ((ts.stop_time ? (ts.stop_time - ts.start_time) : (Time.now - ts.start_time)) / 3600).round(2) }
 				%td
-					%a.btn.btn-info
-						Duplicate
+					%a.btn.btn-info{ :href => duplicate_task_url(task) } Duplicate

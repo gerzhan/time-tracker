@@ -1,8 +1,8 @@
 .offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
 	=render "shared/flash"
-	=form_tag(task_url(@task.id), method: "put", class: "form-horizontal") do
+	=form_tag(scheduled_tasks_url, method: "post", class: "form-horizontal") do
 		.pull-left
-			%h6 Edit Task
+			%h6 Edit Scheduled Task
 		.pull-right
 			%button.btn.btn-primary Save
 		.clearfix
@@ -15,6 +15,10 @@
 			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Comment
 			.col-xs-10.col-sm-10.col-md-10.col-lg-10
 				%input.form-control{ :type => "text", :name => "comment", :placeholder => "Task Comment", :value => @task.comment }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Scheduled For
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "scheduled_for", :placeholder => "mm/dd/yyyy hh:mm", :value => @task.scheduled_for.strftime("%m/%d/%Y %H:%M") }
 		.form-group
 			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Type
 			.col-xs-10.col-sm-10.col-md-10.col-lg-10

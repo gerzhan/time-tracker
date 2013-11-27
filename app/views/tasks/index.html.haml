@@ -54,4 +54,9 @@
 						%a.btn.btn-danger{ :href => stop_task_url(task.id) } 
 							%i.unicon-stop
 							Complete
+					- else
+						= form_tag(scheduled_task_url(task), :method => "delete") do
+							%button.btn.btn-danger
+								%i.unicon-trash
+								Delete
 	= will_paginate @tasks, renderer: BootstrapPagination::Rails

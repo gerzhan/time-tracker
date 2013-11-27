@@ -1,0 +1,41 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	=form_tag(scheduled_tasks_url, method: "post", class: "form-horizontal") do
+		.pull-left
+			%h6 Create New Scheduled Task
+		.pull-right
+			%button.btn.btn-primary Save
+		.clearfix
+		.offset-start
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Name
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "name", :placeholder => "Task Name" }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Comment
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "comment", :placeholder => "Task Comment" }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Scheduled For
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				%input.form-control{ :type => "text", :name => "scheduled_for", :placeholder => "mm/dd/yyyy hh:mm" }
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Type
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "task_type", options_for_select(@types.collect { |t| [t.name, t.id] }), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Customer
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "task_customer", options_for_select(@customers.collect { |t| [t.name, t.id] }), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Project
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "task_project", options_for_select(@projects.collect { |t| [t.name, t.id] }), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Action
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "task_action", options_for_actions(@actions), :include_blank => true, :style => "width: 100%;"
+		.form-group
+			%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Detail
+			.col-xs-10.col-sm-10.col-md-10.col-lg-10
+				=select_tag "task_detail", options_for_details(@details), :include_blank => true, :style => "width: 100%;"

@@ -1,0 +1,38 @@
+.offset-start.col-xs-12.col-sm-12.col-md-12.col-lg-12.well
+	=render "shared/flash"
+	.pull-left
+		%h4 Scheduled Task
+	.pull-right
+		= form_tag(scheduled_task_url(@task), :method => "delete") do
+			%a.btn.btn-primary{ :href => edit_scheduled_task_url(@task.id) }
+				%i.unicon-new-message
+				Edit
+			%button.btn.btn-danger
+				%i.unicon-trash
+				Delete
+	.clearfix
+	.offset-start
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Name
+		%label= @task.name
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Comment
+		%label= @task.comment
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Scheduled For
+		%label= @task.scheduled_for.strftime("%m/%d/%Y %H:%M")
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Type
+		%label= @task.task_type ? @task.task_type.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Customer
+		%label= @task.task_customer ? @task.task_customer.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Project
+		%label= @task.task_project ? @task.task_project.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Action
+		%label= @task.task_action ? @task.task_action.name : ""
+	.form-group
+		%label.col-xs-2.col-sm-2.col-md-2.col-lg-2 Task Detail
+		%label= @task.task_detail ? @task.task_detail.name : ""
