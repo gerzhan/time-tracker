@@ -11,6 +11,8 @@ class UsersController < ApplicationController
 
   def create
     u = User.new
+    u.first_name = params[:first_name]
+    u.last_name = params[:last_name]
     u.username = params[:username]
     u.email = params[:email]
     u.department = params[:department] != "" ? Department.find(params[:department]) : nil
@@ -37,6 +39,8 @@ class UsersController < ApplicationController
 
   def update
     u = User.find(params[:id])
+    u.first_name = params[:first_name]
+    u.last_name = params[:last_name]
     u.username = params[:username]
     u.email = params[:email]
     u.department = params[:department] != "" ? Department.find(params[:department]) : nil

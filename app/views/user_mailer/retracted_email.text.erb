@@ -4,4 +4,4 @@ Time Request Retracted
 
 Hello, <%= @approving_user.first_name + " " + @approving_user.last_name %>
 
-<%= @retracting_user.first_name + " " + @retracting_user.last_name %> has retracted their <%= @time_request.time request_type ? @time_request.time_request_type.name : "" %> schedule request <%= @time_request.name %> from <%= @time_request.from.strftime("%m/%d/%Y %H:%M") %> to <%= @time_request.to.strftime("%m/%d/%Y %H:%M") %>.
+<%= @retracting_user.first_name + " " + @retracting_user.last_name %> has retracted their <%= @time_request.time_request_type ? @time_request.time_request_type.name : "" %> schedule request <%= @time_request.name %> from <%= @time_request.from.strftime("%m/%d/%Y %H:%M") %> to <%= @time_request.to.strftime("%m/%d/%Y %H:%M") %>.
