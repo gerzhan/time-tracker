@@ -196,11 +196,11 @@ class ScheduleController < ApplicationController
 
       cancel_calednar_event(t, t.user, t.time_request_approval.collect { |a| a.user })
 
-      UserMailer.send_calendar_request(current_user, t).deliver
+      CalendarMailer.send_schedule_request(current_user, t).deliver
 
       t.time_request_approval.each do |r|
         UserMailer.retracted_email(current_user, r.user, t).deliver
-        UserMailer.send_calendar_request(r.user, t).deliver
+        CalendarMailer.send_schedule_request(r.user, t).deliver
         r.delete
       end
 
@@ -266,11 +266,11 @@ class ScheduleController < ApplicationController
       create_calendar_event(t.time_request, t.time_request.user, t.time_request.time_request_approval.collect { |a| a.user })
 
       UserMailer.approved_email(t.time_request.user, t.time_request).deliver
-      UserMailer.send_calendar_request(t.time_request.user, t.time_request).deliver
+      CalendarMailer.send_schedule_request(t.time_request.user, t.time_request).deliver
 
       t.time_request.time_request_approval.each do |approval|
         UserMailer.approved_email(approval.user, t.time_request).deliver
-        UserMailer.send_calendar_request(approval.user, t.time_request).deliver
+        CalendarMailer.send_schedule_request(approval.user, t.time_request).deliver
       end
     end
   end
