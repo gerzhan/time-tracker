@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "system@time-tracker.com"
+  default from: "system@timetracker.io"
 
   def welcome_email(user)
     @user = user

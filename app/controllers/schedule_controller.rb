@@ -1,6 +1,8 @@
 require 'date'
+require 'pony'
 
 class ScheduleController < ApplicationController
+  include CalendarInviteSender
 
   def remaining_pto
     t = Date.today
@@ -196,11 +198,11 @@ class ScheduleController < ApplicationController
 
       cancel_calednar_event(t, t.user, t.time_request_approval.collect { |a| a.user })
 
-      CalendarMailer.send_schedule_request(current_user, t).deliver
+      send_calendar_item(current_user, t)
 
       t.time_request_approval.each do |r|
         UserMailer.retracted_email(current_user, r.user, t).deliver
-        CalendarMailer.send_schedule_request(r.user, t).deliver
+        send_calendar_item(r.user, t)
         r.delete
       end
 
@@ -266,11 +268,11 @@ class ScheduleController < ApplicationController
       create_calendar_event(t.time_request, t.time_request.user, t.time_request.time_request_approval.collect { |a| a.user })
 
       UserMailer.approved_email(t.time_request.user, t.time_request).deliver
-      CalendarMailer.send_schedule_request(t.time_request.user, t.time_request).deliver
+      send_calendar_item(t.time_request.user, t.time_request)
 
       t.time_request.time_request_approval.each do |approval|
         UserMailer.approved_email(approval.user, t.time_request).deliver
-        CalendarMailer.send_schedule_request(approval.user, t.time_request).deliver
+        send_calendar_item(approval.user, t.time_request)
       end
     end
   end
@@ -401,5 +403,4 @@ class ScheduleController < ApplicationController
       file.write "END:VCALENDAR\n"
     end
   end
-
 end
