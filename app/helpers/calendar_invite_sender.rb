@@ -9,8 +9,8 @@ module CalendarInviteSender
 			smtp_settings = {
 			    :address        => 'smtp.mandrillapp.com',
 			    :port           => '25',
-			    :user_name      => 'user',
-			    :password       => 'password',
+			    :user_name => ENV["MANDRILL_USERNAME"],
+    			:password  => ENV["MANDRILL_PASSWORD"],
 			    :authentication => :plain, # :plain, :login, :cram_md5, no auth by default
 			    :domain         => 'timetracker.io' # the HELO domain provided by the client to the server
 			}
