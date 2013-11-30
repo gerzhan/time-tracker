@@ -7,12 +7,12 @@ module CalendarInviteSender
 
 		if Rails.env.production?
 			smtp_settings = {
-			    :address        => 'smtp.yourserver.com',
+			    :address        => 'smtp.mandrillapp.com',
 			    :port           => '25',
 			    :user_name      => 'user',
 			    :password       => 'password',
 			    :authentication => :plain, # :plain, :login, :cram_md5, no auth by default
-			    :domain         => "localhost.localdomain" # the HELO domain provided by the client to the server
+			    :domain         => 'timetracker.io' # the HELO domain provided by the client to the server
 			}
 		elsif Rails.env.development? || Rails.env.test?
 			smtp_settings = {
