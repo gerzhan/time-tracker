@@ -6,7 +6,7 @@ module CalendarInviteSender
 		smtp_settings = {}
 
 		if Rails.env.production?
-			config.action_mailer.smtp_settings = {
+			smtp_settings = {
 	    		:address   => "smtp.sendgrid.net",
 			    :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
 			    :enable_starttls_auto => true, # detects and uses STARTTLS
