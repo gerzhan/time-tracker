@@ -6,14 +6,15 @@ module CalendarInviteSender
 		smtp_settings = {}
 
 		if Rails.env.production?
-			smtp_settings = {
-			    :address        => 'smtp.mandrillapp.com',
-			    :port           => '25',
-			    :user_name => ENV["MANDRILL_USERNAME"],
-    			:password  => ENV["MANDRILL_PASSWORD"],
-			    :authentication => :plain, # :plain, :login, :cram_md5, no auth by default
-			    :domain         => 'timetracker.io' # the HELO domain provided by the client to the server
-			}
+			config.action_mailer.smtp_settings = {
+			    :address   => "smtp.sendgrid.net",
+			    :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
+			    :enable_starttls_auto => true, # detects and uses STARTTLS
+			    :user_name => "#{ENV["SENDGRID_USERNAME"]}",
+			    :password  => "#{ENV["SENDGRID_PASSWORD"]}", 
+			    :authentication => 'login', # Mandrill supports 'plain' or 'login'
+			    :domain => 'work-tracker.herokuapp.com', # your domain to identify your server when connecting
+			}	
 		elsif Rails.env.development? || Rails.env.test?
 			smtp_settings = {
 			    :address => "localhost",
