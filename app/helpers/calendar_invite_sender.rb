@@ -7,14 +7,14 @@ module CalendarInviteSender
 
 		if Rails.env.production?
 			config.action_mailer.smtp_settings = {
-			    :address   => "smtp.sendgrid.net",
-			    :port      => 25, # ports 587 and 2525 are also supported with STARTTLS
+	    		:address   => "smtp.sendgrid.net",
+			    :port      => 587, # ports 587 and 2525 are also supported with STARTTLS
 			    :enable_starttls_auto => true, # detects and uses STARTTLS
 			    :user_name => "#{ENV["SENDGRID_USERNAME"]}",
 			    :password  => "#{ENV["SENDGRID_PASSWORD"]}", 
-			    :authentication => 'login', # Mandrill supports 'plain' or 'login'
+			    :authentication => 'plain', # Mandrill supports 'plain' or 'login'
 			    :domain => 'work-tracker.herokuapp.com', # your domain to identify your server when connecting
-			}	
+  			}	
 		elsif Rails.env.development? || Rails.env.test?
 			smtp_settings = {
 			    :address => "localhost",
