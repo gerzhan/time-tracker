@@ -24,7 +24,7 @@ module CalendarInviteSender
 
 		Pony.mail({
 		  :to => user.email,
-		  :body => File.open("#{Rails.root}/public/scheduled_requests/#{time_request.id}.ics","r").read,
+		  :body => File.open("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics","r").read,
 		  :content_type => "text/calendar;
  charset=UTF-8;
  method=REQUEST;

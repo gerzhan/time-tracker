@@ -290,7 +290,7 @@ class TasksController < ApplicationController
   end
 
   def create_calendar_event(task, creator) 
-    File.open("#{Rails.root}/public/schedule_tasks/#{task.id}.ics", "w") do |file|
+    File.open("#{Rails.root}/public/scheduled_tasks/#{task.id}.ics", "w") do |file|
       file.write "BEGIN:VCALENDAR\n"
       file.write "METHOD:REQUEST\n"
       file.write "PRODID:Microsoft Exchange Server 2010\n"
