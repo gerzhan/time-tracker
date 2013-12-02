@@ -24,7 +24,11 @@ module CalendarInviteSender
 		Pony.mail({
 		  :to => user.email,
 		  :body => File.open("#{Rails.root}/public/schedule_requests/#{time_request.id}.ics","r").read,
-		  :content_type => "text/calendar",
+		  :content_type => "text/calendar;
+ charset=UTF-8;
+ method=REQUEST;
+ name='meeting.ics'",
+		  :headers => { "Mime-Version" => "1.0", "Content-Transfer-Encoding" => "7bit" },
 		  :from => "system@timetracker.io",
 		  :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} #{time_request.name}",
 		  :via => :smtp,
