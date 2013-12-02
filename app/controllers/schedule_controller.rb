@@ -353,7 +353,7 @@ class ScheduleController < ApplicationController
     end
   end
 
-  def cancel_calednar_event(event, creator, approvers)
+  def cancel_calendar_event(event, creator, approvers)
     File.open("#{Rails.root}/public/schedule_requests/#{event.id}.ics", "w") do |file|
       file.write "BEGIN:VCALENDAR\n"
       file.write "METHOD:CANCEL\n"

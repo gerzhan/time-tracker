@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  include CalendarInviteSender
   
   def index
       @tasks = Task.where("user_id = ? and task_status_id in (?)", current_user, [TaskStatus.STARTED, TaskStatus.RESUMED, TaskStatus.PAUSED, TaskStatus.SCHEDULED]).page(params[:page])
@@ -33,6 +34,9 @@ class TasksController < ApplicationController
     t.user = current_user
     t.task_status = TaskStatus.SCHEDULED
     t.save!
+
+    create_calendar_event(current_user, t)
+    send_scheduled_task_item(current_user, t)
 
     flash[:success] = "Scheduled New Task"
     redirect_to tasks_url
@@ -124,6 +128,9 @@ class TasksController < ApplicationController
     t.task_status = TaskStatus.STARTED
     t.save!
 
+    create_calendar_event(current_user, t)
+    send_scheduled_task_item(current_user, t)
+
     flash[:success] = "Task Updated"
     redirect_to task_url(t.id)
   end
@@ -156,6 +163,9 @@ class TasksController < ApplicationController
     if t.user != current_user
       not_authorized
     end
+
+    cancel_calendar_event(current_user, t)
+    send_scheduled_task_item(current_user, t)
 
     t.delete
 
@@ -277,5 +287,129 @@ class TasksController < ApplicationController
     }
 
     @tasks = @tasks.page(params[:page])
+  end
+
+  def create_calendar_event(task, creator) 
+    File.open("#{Rails.root}/public/schedule_tasks/#{task.id}.ics", "w") do |file|
+      file.write "BEGIN:VCALENDAR\n"
+      file.write "METHOD:REQUEST\n"
+      file.write "PRODID:Microsoft Exchange Server 2010\n"
+      file.write "VERSION:2.0\n"
+      file.write "BEGIN:VTIMEZONE\n"
+      file.write "TZID:Eastern Standard Time\n"
+      file.write "BEGIN:STANDARD\n"
+      file.write "DTSTART:16010101T020000\n"
+      file.write "TZOFFSETFROM:-0400\n"
+      file.write "TZOFFSETTO:-0500\n"
+      file.write "RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11\n"
+      file.write "END:STANDARD\n"
+      file.write "BEGIN:DAYLIGHT\n"
+      file.write "DTSTART:16010101T020000\n"
+      file.write "TZOFFSETFROM:-0500\n"
+      file.write "TZOFFSETTO:-0400\n"
+      file.write "RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3\n"
+      file.write "END:DAYLIGHT\n"
+      file.write "END:VTIMEZONE\n"
+      file.write "BEGIN:VEVENT\n"
+      file.write "ORGANIZER;CN=#{creator.first_name} #{creator.last_name}:MAILTO:#{creator.email}\n"
+      file.write "DESCRIPTION;LANGUAGE=en-US:#{task.comment}\n"
+      file.write "SUMMARY;LANGUAGE=en-US: Scheduled Task - #{task.name}\n"
+      file.write "DTSTART;TZID=Eastern Standard Time:#{task.scheduled_for.strftime("%Y%m%dT%H%M%S")}\n"
+      file.write "DTEND;TZID=Eastern Standard Time:#{(task.scheduled_for + 1.hours).strftime("%Y%m%dT%H%M%S")}\n"
+      file.write "UID: time-tracker-scheduled-task-#{task.id}-#{creator.email}\n"
+      file.write "CLASS:PUBLIC\n"
+      file.write "PRIORITY:5\n"
+      file.write "DTSTAMP:#{DateTime.now.strftime("%Y%m%dT%H%M%SZ")}\n"
+      file.write "TRANSP:OPAQUE\n"
+      file.write "STATUS:CONFIRMED\n"
+      file.write "SEQUENCE:0\n"
+      file.write "LOCATION;LANGUAGE=en-US:\n"
+      file.write "X-MICROSOFT-CDO-APPT-SEQUENCE:0\n"
+      file.write "X-MICROSOFT-CDO-OWNERAPPTID:-1531201571\n"
+      file.write "X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE\n"
+      file.write "X-MICROSOFT-CDO-INTENDEDSTATUS:FREE\n"
+      file.write "X-MICROSOFT-CDO-ALLDAYEVENT:FALSE\n"
+      file.write "X-MICROSOFT-CDO-IMPORTANCE:1\n"
+      file.write "X-MICROSOFT-CDO-INSTTYPE:0\n"
+      file.write "X-MICROSOFT-DISALLOW-COUNTER:FALSE\n"
+      file.write "END:VEVENT\n"
+      file.write "BEGIN:VALARM\n"
+      file.write "TRIGGER:-P1D\n"
+      file.write "ACTION:EMAIL\n"
+      file.write "ATTENDEE:MAILTO: #{creator.email}\n"
+      file.write "SUMMARY:*** REMINDER: Scheduled Task - #{task.name} ***\n"
+      file.write "DESCRIPTION: Your task is scheduled to begin tomorrow.\n"
+      file.write "END:VALARM\n"
+      file.write "BEGIN:VALARM\n"
+      file.write "TRIGGER:-P1H\n"
+      file.write "ACTION:EMAIL\n"
+      file.write "ATTENDEE:MAILTO: #{creator.email}\n"
+      file.write "SUMMARY:*** REMINDER: Scheduled Task - #{task.name} ***\n"
+      file.write "DESCRIPTION: Your task is scheduled to begin in 1 hour.\n"
+      file.write "END:VALARM\n"
+      file.write "END:VCALENDAR\n"
+    end
+  end
+
+  def cancel_calendar_event(task, creator)
+    File.open("#{Rails.root}/public/scheduled_tasks/#{event.id}.ics", "w") do |file|
+      file.write "BEGIN:VCALENDAR\n"
+      file.write "METHOD:CANCEL\n"
+      file.write "PRODID:Microsoft Exchange Server 2010\n"
+      file.write "VERSION:2.0\n"
+      file.write "BEGIN:VTIMEZONE\n"
+      file.write "TZID:Eastern Standard Time\n"
+      file.write "BEGIN:STANDARD\n"
+      file.write "DTSTART:16010101T020000\n"
+      file.write "TZOFFSETFROM:-0400\n"
+      file.write "TZOFFSETTO:-0500\n"
+      file.write "RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=1SU;BYMONTH=11\n"
+      file.write "END:STANDARD\n"
+      file.write "BEGIN:DAYLIGHT\n"
+      file.write "DTSTART:16010101T020000\n"
+      file.write "TZOFFSETFROM:-0500\n"
+      file.write "TZOFFSETTO:-0400\n"
+      file.write "RRULE:FREQ=YEARLY;INTERVAL=1;BYDAY=2SU;BYMONTH=3\n"
+      file.write "END:DAYLIGHT\n"
+      file.write "END:VTIMEZONE\n"
+      file.write "BEGIN:VEVENT\n"
+      file.write "ORGANIZER;CN=#{creator.first_name} #{creator.last_name}:MAILTO:#{creator.email}\n"
+      file.write "DESCRIPTION;LANGUAGE=en-US:#{task.comment}\n"
+      file.write "SUMMARY;LANGUAGE=en-US: Scheduled Task - #{task.name}\n"
+      file.write "DTSTART;TZID=Eastern Standard Time:#{task.scheduled_for.strftime("%Y%m%dT%H%M%S")}\n"
+      file.write "DTEND;TZID=Eastern Standard Time:#{(task.scheduled_for + 1.hours).strftime("%Y%m%dT%H%M%S")}\n"
+      file.write "UID: time-tracker-scheduled-task-#{task.id}-#{creator.email}\n"
+      file.write "CLASS:PUBLIC\n"
+      file.write "PRIORITY:5\n"
+      file.write "DTSTAMP:#{DateTime.now.strftime("%Y%m%dT%H%M%SZ")}\n"
+      file.write "TRANSP:OPAQUE\n"
+      file.write "STATUS:CANCELLED\n"
+      file.write "SEQUENCE:0\n"
+      file.write "LOCATION;LANGUAGE=en-US:\n"
+      file.write "X-MICROSOFT-CDO-APPT-SEQUENCE:0\n"
+      file.write "X-MICROSOFT-CDO-OWNERAPPTID:-1531201571\n"
+      file.write "X-MICROSOFT-CDO-BUSYSTATUS:TENTATIVE\n"
+      file.write "X-MICROSOFT-CDO-INTENDEDSTATUS:FREE\n"
+      file.write "X-MICROSOFT-CDO-ALLDAYEVENT:FALSE\n"
+      file.write "X-MICROSOFT-CDO-IMPORTANCE:1\n"
+      file.write "X-MICROSOFT-CDO-INSTTYPE:0\n"
+      file.write "X-MICROSOFT-DISALLOW-COUNTER:FALSE\n"
+      file.write "END:VEVENT\n"
+      file.write "BEGIN:VALARM\n"
+      file.write "TRIGGER:-P1D\n"
+      file.write "ACTION:EMAIL\n"
+      file.write "ATTENDEE:MAILTO: #{creator.email}\n"
+      file.write "SUMMARY:*** REMINDER: Scheduled Task - #{task.name} ***\n"
+      file.write "DESCRIPTION: Your task is scheduled to begin tomorrow.\n"
+      file.write "END:VALARM\n"
+      file.write "BEGIN:VALARM\n"
+      file.write "TRIGGER:-P1H\n"
+      file.write "ACTION:EMAIL\n"
+      file.write "ATTENDEE:MAILTO: #{creator.email}\n"
+      file.write "SUMMARY:*** REMINDER: Scheduled Task - #{task.name} ***\n"
+      file.write "DESCRIPTION: Your task is scheduled to begin in 1 hour.\n"
+      file.write "END:VALARM\n"
+      file.write "END:VCALENDAR\n"
+    end
   end
 end
