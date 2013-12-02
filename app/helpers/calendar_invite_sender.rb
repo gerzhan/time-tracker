@@ -30,7 +30,7 @@ module CalendarInviteSender
  method=REQUEST;
  name='meeting.ics'",
 		  :headers => { "Mime-Version" => "1.0", "Content-Transfer-Encoding" => "7bit" },
-		  :from => "work-tracker.herokuapp.com",
+		  :from => "system@work-tracker.herokuapp.com",
 		  :subject => "#{time_request.time_request_type ? time_request.time_request_type.name : ""} #{time_request.name}",
 		  :via => :smtp,
 		  :via_options => smtp_settings
@@ -65,7 +65,7 @@ module CalendarInviteSender
  method=REQUEST;
  name='meeting.ics'",
 		  :headers => { "Mime-Version" => "1.0", "Content-Transfer-Encoding" => "7bit" },
-		  :from => "work-tracker.herokuapp.com",
+		  :from => "system@work-tracker.herokuapp.com",
 		  :subject => "Scheduled Task - #{task.name}",
 		  :via => :smtp,
 		  :via_options => smtp_settings
