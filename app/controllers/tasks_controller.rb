@@ -35,7 +35,7 @@ class TasksController < ApplicationController
     t.task_status = TaskStatus.SCHEDULED
     t.save!
 
-    create_calendar_event(current_user, t)
+    create_calendar_event(t, current_user)
     send_scheduled_task_item(current_user, t)
 
     flash[:success] = "Scheduled New Task"
@@ -128,7 +128,7 @@ class TasksController < ApplicationController
     t.task_status = TaskStatus.STARTED
     t.save!
 
-    create_calendar_event(current_user, t)
+    create_calendar_event(t, current_user)
     send_scheduled_task_item(current_user, t)
 
     flash[:success] = "Task Updated"
@@ -164,7 +164,7 @@ class TasksController < ApplicationController
       not_authorized
     end
 
-    cancel_calendar_event(current_user, t)
+    cancel_calendar_event(t, current_user)
     send_scheduled_task_item(current_user, t)
 
     t.delete
